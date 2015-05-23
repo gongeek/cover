@@ -1,27 +1,304 @@
-html,body,.container-fluid {
+html, body, .container-fluid {
     height: 100%;
     overflow: hidden;
 }
+
 .header {
     height: 10%;
     background: #cfc;
 }
+
 .main {
     height: 90%;
     border: 1px solid #b5b9c0;
+    border-left: none;
 }
-.left{
+
+.left {
     float: left;
     width: 25%;
     height: 100%;
     border-right: 1px solid #a0a1a3
 }
-.right{
+
+.right {
     float: right;
     width: 75%;
     height: 100%;
-    box-shadow: 0 0 5px #ccc  inset;
+    box-shadow: 0 0 5px #ccc inset;
 }
-#map{
+
+#map {
+    position: relative;
     height: 100% !important;
+}
+
+.map-btn {
+    padding: 5px;
+    border-radius: 2px;
+    border: 1px solid #000000;
+    background: #ffffff;
+    cursor: pointer;
+    z-index: 11;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.map-btn:hover {
+    background: #eee;
+}
+
+.map-plane {
+    position: absolute;
+    background: #ffffff;
+    border-radius: 2px;
+    border: 1px dashed #000000;
+    opacity: 0.8;
+    z-index: 11;
+}
+
+#J_SwitchBtn {
+    position: absolute;
+    top: 3%;
+    right: 2%;
+}
+
+#J_layerInfo {
+    display: none;
+    padding: 5px 10px;
+    top: 10%;
+    right: 2%;
+}
+
+#J_layerInfo label {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.un-select-able {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+#J_layerInfo input {
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
+
+}
+
+#J_show_tuli {
+    position: absolute;
+    bottom: 2%;
+    left: 2%;
+}
+
+#J_show_tuli:hover {
+    background: #EEEEEE;
+}
+
+#J_tuli {
+    width: 0;
+    height: 165px;
+    display: none;
+    padding: 5px;
+    bottom: 2%;
+    left: 6%;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+#J_tuli td {
+    height: 30px;
+    padding: 5px;
+    overflow: hidden;
+}
+
+#J_tuli tr {
+    display: block;
+    width: 164px;
+    height: 30px;
+}
+
+.tuli-color {
+    width: 20px;
+    height: 20px;
+    background: #000000;
+}
+
+.color-1 {
+    background: rgb(249, 243, 193);
+}
+
+.color-2 {
+    background: rgb(20, 119, 73);
+}
+
+.color-3 {
+    background: rgb(169, 208, 95);
+}
+
+.color-4 {
+    background: rgb(62, 179, 112);
+}
+
+.color-5 {
+    background: rgb(126, 206, 244);
+}
+
+.color-6 {
+    background: rgb(0, 68, 154);
+}
+
+.color-7 {
+    background: rgb(100, 100, 50);
+}
+
+.color-8 {
+    background: rgb(147, 47, 20);
+}
+
+.color-9 {
+    background: rgb(202, 202, 202);
+}
+
+.color-10 {
+    background: rgb(211, 237, 251);
+}
+
+#map_zoom_slider {
+    top: 40%;
+}
+
+#J_measure_btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+}
+
+#J_measure_tool {
+    display: none;
+    width: 220px;
+    padding: 10px;
+    top: 70px;
+    left: 20px;
+}
+
+.claro .dijitTitlePaneTitle {
+    background: #fff;
+    font-weight: 600;
+    border: none;
+    border-bottom: solid 1px #29201A;
+    border-top: solid 1px #29201A;
+}
+
+.claro .dijitTitlePaneTitleHover {
+    background: #eee;
+}
+
+.claro .dijitTitlePaneTitleActive {
+    background: #808775;
+}
+
+.claro .dijitTitlePaneContentOuter {
+    border-right: none;
+    border-bottom: none;
+    border-left: none;
+}
+
+#search {
+    position: absolute;
+    left: 30%;
+    z-index: 12;
+}
+
+#J_tab-btn {
+    position: relative;
+    float: left;
+    width: 15%;
+    height: 100%;
+    background: #000000;
+    box-shadow: 0 0 1px #000;
+}
+
+#J_tab-btn ul {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    z-index: 2;
+}
+
+#J_tab-btn li {
+    padding: 12px 5px 10px 5px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+#J_tab-btn a {
+    color: #ffffff;
+}
+
+#J_tab-btn a:hover {
+    text-decoration: none;
+}
+
+#J_tab-btn a:active {
+    text-decoration: none;
+}
+
+#J_tab-btn a:focus {
+    text-decoration: none;
+}
+
+#J_tab-content {
+    float: left;
+    width: 85%;
+    height: 100%;
+}
+
+#over-blue {
+    position: absolute;
+    top: 0;
+    height: 62px;
+    width: 100%;
+    background: blue;
+    z-index: 1;
+}
+
+.tab-content {
+    height: 100%;
+    padding: 10px 5px 0 5px;
+    display: none;
+}
+
+#J_tab-content .active {
+    display: block;
+}
+
+#search-btn {
+    cursor: pointer;
+}
+
+#search-list-group {
+    margin-top: 2px;
+}
+
+.scroll-y-plane {
+    margin-top: 15px;
+    padding-right: 5px;
+    height: 95%;
+    overflow-y: scroll;
+}
+
+.scroll-y-plane::-webkit-scrollbar {
+    width: 0;
 }

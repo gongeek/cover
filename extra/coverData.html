@@ -1,0 +1,368 @@
+
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=7" />
+	<title>全球地表覆盖浏览 </title>
+	<link href="css/mainbody.css" rel="stylesheet" type="text/css" />
+	<link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
+	<link href="css/pagenumber.css" rel="stylesheet" type="text/css" />
+	<link href="css/dldStyle.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="js/OpenLayers/OpenLayers.debug.js"></script>
+	<script type="text/javascript" src="js/OpenLayers/lib/OpenLayers/Control/PanZoomBar.js"></script>
+
+	<script type="text/javascript" src="js/OpenLayers/deprecated.js"></script>
+	<script type="text/javascript" src="js/mapInitial.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/mapOperation.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.js"></script>
+	<script type="text/javascript" src="js/global.js"></script>
+	<script type="text/javascript" src="http://ditu.google.cn/maps/api/js?sensor=false&amp;libraries=places"></script>
+	<script type="text/javascript" src="js/jquery.geocomplete.js"></script>
+
+	<script src="js/jquery.paginate.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/jquery.myPagination5.0.js"></script>
+	<link href="css/page.css" rel="stylesheet" type="text/css" />
+	<link href="css/head.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		html {height:100%;max-height:100%;padding:0;margin:0;border:0;
+			/* hide overflow:hidden from IE5/Mac */
+			/* \*/
+			overflow:visible;
+			/* */
+		}
+
+		body{height:100%;max-height:100%;overflow:hidden;padding:0;margin:0; border:0;font-family:"宋体";}
+
+
+		a {
+			text-decoration:none;
+		}
+		a:hover{color:Green;text-decoration:underline;}
+
+	</style>
+
+	<script type="text/javascript">
+		//得到焦点触发事件
+		function OnfocusFun(element,elementvalue)
+		{
+			if(element.value==elementvalue)
+			{
+				element.value="";
+				element.style.color="#000";
+			}
+		}
+
+		//离开输入框触发事件
+		function OnBlurFun(element,elementvalue)
+		{
+			if(element.value==""||element.value.replace(/\s/g,"")=="")
+			{
+				element.value=elementvalue;
+				element.style.color="#999";
+			}
+		}
+	</script>
+</head>
+<body height=100% leftmargin="0" topmargin="0"  >
+<form method="post" action="index.aspx" id="form1">
+	<div class="aspNetHidden">
+		<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTExOTI0NTQ1MjIPZBYCAgEPZBYEAgUPDxYCHgdWaXNpYmxlaGRkAgcPFgIfAGhkZHI15QZk+nvtPx8ibXraSImqWdfuDv20MghIli5E9zjC" />
+	</div>
+
+	<div class="aspNetHidden">
+
+		<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWCwLi3NXwBALcyO7BAwLcyKrTDQLcyJb4BALcyNKJDwLcyL6uBgLcyPo/AtzI5uQHAtzIovYBAtzIjpsJApm5po0Dz7XEdIpVl9gTdMVKTmxx3MSqv5GM5pbD7NhrrHUdeog=" />
+	</div>
+
+
+	<table id="headertop" height="70px" style=" background-color:#f7fdfe;" cellpadding="0px" cellspacing="0px" border="0px" width="100%" >
+		<tr>
+			<td align="left"  width=30%>
+				<div><image src=../../images/logo.jpg height=50px></image></div>
+			</td>
+			<td align="right" valign="middle" style="vertical-align:middle;" width=50% >
+
+				<a id="GLC" href="index.aspx" style="font-weight:bold;">首页</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../home/papersCN.aspx">文献</a>&nbsp;&nbsp;&nbsp;&nbsp;<a id="DL" href="DownLoad.aspx">下载</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="../biaobao/default.aspx" target="_blank">标报</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/index.aspx">新闻</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../home/background.aspx">数据介绍</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			</td>
+			<td align="center" width=10%>
+
+				<a href="../User/Login.aspx" id="aLogin"><img id="imglogin" src="Images/denglu.jpg" style="vertical-align:middle;border:0px;" /></a>
+
+			</td>
+			<td align=center width="10%">&nbsp;<a href="../../GLC30Download/index.aspx">English</a>&nbsp;&nbsp;</td>
+		</tr></table>
+
+
+
+	<table height="30px" style=" border-top:1px solid #0ebfdd; border-bottom:1px solid #0ebfdd; background-color:#f5f5f5;" cellpadding="0px" cellspacing="0px" border="0px"  width="100%">
+		<tr>
+			<td width="300px"> <img src="/Images/login4.jpg" width="300px" style="vertical-align:middle;" /></td>
+			<td  >
+				<div id="toolbars">
+					<span id="qk" style="display: none;" class="icon" title="Clear"></span><span id="boxQuery"
+					                                                                             onclick="toggleControl(this)" class="icon" style="display: none;" title="Rectangle inquire">
+                            </span><span id="pologonQuery" onclick="toggleControl(this)" class="icon" style="display: none;"
+					                               title="Polygon inquire"></span><span id="pointQuery" onclick="toggleControl(this)" class="icon"
+					                                                                    style="display: none;" title="Point inquire">&nbsp;</span>
+
+					<!--    <span id="fullScreen" class='icon-con' title="-->
+					<!--"></span>-->
+
+					<span id="qq" class="icon" title="Global view"></span><span id="zomIn" onclick="toggleControl(this)"
+					                                                            class="icon" title="Zoom in"></span><span id="zomOut" onclick="toggleControl(this)" class="icon"
+					                                                                                                      title="Zoom out"></span><span id="pan" onclick="toggleControl(this)" class="icon" title="Pan">
+                                    </span><span id="mearuePolygon" class="icon" title="Measure area" onclick="drawControl(this);">
+                                    </span><span id="mearueLine" class="icon" title="Measure distance" onclick="drawControl(this);">
+                            </span><span style="display:none;" id="queryPlace" class="icon" title="Location" onclick="toggleControl(this);">
+                            </span>
+
+					<span id="fenping" class="ficon" title="Split screen"></span>
+
+
+				</div>
+				<!--#nav-search-->
+				<div style="float:right; padding-right:4px; border:1px;">
+					<div style="float:right;">
+						<form>
+
+							<input id="dm" style="width:120px;height:20px;"   type="text"   placeholder="Search ..." name="dm">
+							<input id="dmdcx" style="width:30px;height:25px;" type="button" value="GO" name="dtdwdw"><br />
+						</form>
+					</div>
+					<ul>
+						<li style="display: none;"><span data-geo="location" id="coordinate"></span></li>
+					</ul>
+
+					<div class="search_position">
+					</div>
+					<div class="place_page">
+					</div>
+				</div><!--#nav-search-->
+
+			</td>
+		</tr>
+	</table>
+
+	<div class="op">
+		<img src="Images/la.png" title="全屏显示" />
+	</div>
+	<table width="100%" id="main_table" >
+		<tr>
+			<td id="lefts" style="width: 300px ; " valign="top">
+				<div class="left">
+					<input type="hidden" name="hidMenu1" id="hidMenu1" value="&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu1.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;2&quot; des=&quot;芬兰位于欧洲北部，与瑞典、挪威、俄罗斯接壤，南临芬兰湾，西濒波的尼亚湾，海岸线长1100 km。境内由冰川活动形成的冰蚀湖和冰碛湖与狭窄的水道、短河、急流相连，从而形成互相沟通的水路。内陆水域面积占全国总面积的12.2%，500 m2以上的湖泊约18.8万个，故有“千湖之国”的称号。境内最大的湖是派延奈湖，最长的河流是凯米河。芬兰还是传说中的圣诞老人的故乡。&quot; title=&quot;千湖之国——芬兰&quot;>千湖之国——芬兰&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu1.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;3&quot; des=&quot;加拿大是世界上领土面积第二大的国家，位于北美洲北部，东濒大西洋，西临太平洋，北接北冰洋，西北部邻美国阿拉斯加州，东北与格陵兰（丹）隔戴维斯海峡遥遥相望，南接美国本土。水域面积全球最大，约为116万 km2，水域率11.6%。境内多河流、湖泊和海湾，冰蚀湖广布，绝大部分河流多急流和瀑布。马更些河为境内最大河流，全长4241 km。哈德逊湾是最大海湾。圣劳伦斯河深水航道连接美加两国，船舶通航可从大西洋抵达五大湖水系。&quot; title=&quot;水域面积最大的国家——加拿大&quot;>水域面积最大的国家——加拿大&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu1.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;4&quot; des=&quot;东非大裂谷是大陆漂移运动而形成的，是世界大陆上最大的断裂带，从形状上看去犹如一道巨大的伤疤。受地质构造影响，地凹处积水成湖。非洲大部分湖泊都集中在这里，湖泊成串珠状，大大小小约有30来个，依次分布有马拉维湖、坦噶尼喀湖、艾伯特湖、维多利亚湖等。这些裂谷带的湖泊多狭长水深，水量丰富；湖周围野生动物众多，是旅游观光的胜地。&quot; title=&quot;东非大裂谷串珠状湖泊&quot;>东非大裂谷串珠状湖泊&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu1.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;5&quot; des=&quot;亚马逊流域位于南美洲，是世界上面积和水资源量最大的流域。其中亚马逊河是南美第一、世界第二长河，发源于安第斯山高原，流经秘鲁、巴西、玻利维亚、厄瓜多尔、哥伦比亚和委内瑞拉等7国，在赤道附近注入大西洋，河水量终年充沛，是世界流量最大、支流最多的河流。亚马逊流域内大部分地区属于热带雨林气候，多雨、潮湿、高温，年降雨量均在2000 mm以上。平原地势低平坦荡，河流蜿蜒曲折，湖沼众多，蕴藏着世界最丰富多样的生物资源，各种生物多达数百万种。&quot; title=&quot;世界最大流域——亚马孙流域&quot;>世界最大流域——亚马孙流域&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu1.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;6&quot; des=&quot;尼罗河三角洲位于埃及北部，由尼罗河干流汇入地中海形成。它以开罗为顶点，西至亚历山大港，东到塞德港，南北长约160 km，东西宽250 km，是世界上最大的三角洲之一。尼罗河是世界第一长河，发源于赤道多雨区。尼罗河三角洲土地肥沃，人口密集，是古埃及文明的发源地。这里耸立着安葬埃及法老的金字塔，诞生了人类历史上最早的太阳历。&quot; title=&quot;第一长河——尼罗河下游河口三角洲&quot;>第一长河——尼罗河下游河口三角洲&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu1.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;7&quot; des=&quot;青藏高原分布着数目极多的湖泊，构成了世界上海拔最高、数量最多、面积最大的湖泊群。青藏高原湖泊群的形成与青藏高原的隆起过程相伴随，所以其分布、形态大体与构造地貌活动线一致，呈现出以东西或北西向排列为主的长方形、椭圆形和线状形态，通常水深较深。青藏高原湖泊水资源总储量约6080亿m3，占全国湖水储量的70％以上。由于青藏高原高山谷地的存在，使得湖泊之间存在巨大的落差，从而能够带来巨大的水能资源。东亚、东南亚和南亚的几条主要大河均发源于青藏高原。&quot; title=&quot;世界上最大高原湖泊群——青藏高原湖泊群&quot;>世界上最大高原湖泊群——青藏高原湖泊群&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu1.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;8&quot; des=&quot;勒拿河长4400 km，是世界第十长河流，也是俄罗斯最长的河流。勒拿河发源于贝加尔山西坡，距贝加尔湖仅7 km，沿中西伯利亚高原东缘曲折北流，纵贯西伯利亚森林与苔原带，在中下游地区呈现出独特的辫状河流形状；向北注入北冰洋拉普捷夫海，在河口处形成俄罗斯最大的三角洲——勒拿河三角洲，形状呈扇形，面积约3.2万km2，三角洲上分支出约150余条汊流，1000多个岛屿。三角洲曾有猛犸象象牙出土。&quot; title=&quot;辫状河流水系——俄罗斯勒拿河下游&quot;>辫状河流水系——俄罗斯勒拿河下游&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu1.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;51&quot; des=&quot;&quot; title=&quot;乍得湖&quot;>乍得湖&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu1.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;52&quot; des=&quot;&quot; title=&quot;咸海&quot;>咸海&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu1.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;53&quot; des=&quot;&quot; title=&quot;朝鲜半岛水库建设&quot;>朝鲜半岛水库建设&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu1.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;58&quot; des=&quot;&quot; title=&quot;三峡大坝&quot;>三峡大坝&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu1.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;59&quot; des=&quot;&quot; title=&quot;北欧山体阴影&quot;>北欧山体阴影&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu1.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;67&quot; des=&quot;&quot; title=&quot;陨石坑&quot;>陨石坑&lt;/a>&lt;/li>" />
+					<input type="hidden" name="hidMenu2" id="hidMenu2" value="&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu2.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;10&quot; des=&quot;潘塔纳尔湿地（Pantanal）是世上最大的湿地，地势平坦而轻微倾斜，有着曲折的河流。位于南美洲巴西马托格罗索州及南马托格罗索州，湿地部份在玻利维亚及巴拉圭境内，总面积达242,000平方公里。潘塔纳尔在雨季时会泛滥，超过80%面积会被水淹没，是全球最丰富的水生植物集中地。潘塔纳尔被认为是全球动植物最密集的生态系统。&quot; title=&quot;世界上最大的湿地——潘塔纳尔沼泽地&quot;>世界上最大的湿地——潘塔纳尔沼泽地&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu2.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;11&quot; des=&quot;又名奥卡万戈河三角洲（Okavango Delta），得名于南部非洲的第四长河奥卡万戈河。位于博茨瓦纳北部，面积约15000平方公里，在喀拉哈里沙漠中被陆地环绕着，是世界上最大的内陆三角洲，也是草原与荒漠中难得的热带湿地。由奥卡万戈河注入卡拉哈里沙漠而形成，大部分水通过蒸发和蒸腾作用而流失。每年大约有11立方千米的水灌溉15,000km?的土地，多余的水会流入恩加米湖。该地区曾经是马卡迪卡迪湖的一部分，该湖泊在全新世早期几乎全部干涸。 &quot; title=&quot;世界上最大的内陆三角洲——奥卡万戈沼泽&quot;>世界上最大的内陆三角洲——奥卡万戈沼泽&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu2.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;12&quot; des=&quot;（中文亦称“松达班”Sundarbans），横跨印度和孟加拉国两国、面积约10269平方公里，是由恒河、布拉马普特拉河及梅克纳河三大河冲击而成的，是世界十大著名湿地之一。这里不仅森林、海滩、河口、溪流、潮沟、海岸沙丘、背沙丘、岛屿与盐水沼泽等如迷宫般密布，而且还拥有世界上最大、最著名的天然红树林和大面积的人工红树林，更是孟加拉虎生存的最后大本营。之所以命名为“孙德尔本斯”，是因为该地茂密的森林中广泛生长着名为“孙德尔”的优美的树种。在孟加拉语中，“Sundarbans”其字面的意义是“美丽的森林”。&quot; title=&quot;世界上最大的三角洲综合体——孙德尔本斯湿地&quot;>世界上最大的三角洲综合体——孙德尔本斯湿地&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu2.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;13&quot; des=&quot;回水区位于印度南部四季如春的喀拉拉邦，是由一系列泻湖以及淡水湖组成的湿地保护区。它与阿拉伯海岸线（Arabian Sea Coast）平行，主要靠38条河流供水，绵延喀拉拉邦大部分地区，是印度最重要的湿地保护区之一。喀拉拉邦河流纵横，遍布南北，众河流在流至海岸线附近受海浪以及洋流的双重作用形成大片沿岸低洼水区，故被称为回水区。回水区内既有来自陆地流入的淡水，又有阿拉伯海冲上的海水，形成最独特的湿地区域之一，不仅为给当地人民提供了便利的水路交通，也为诸如鸬鹚、翠鸟、燕鸥等诸多鸟类和水獭、乌龟等动物提供了舒适的生存环境。&quot; title=&quot;亚洲最独特的湿地——卡拉拉邦回水区&quot;>亚洲最独特的湿地——卡拉拉邦回水区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu2.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;14&quot; des=&quot;班韦乌卢湿地系统(Bangweulu Wetlands System) 位于非洲赞比亚卢阿普拉省以及北部省的刚果河上游流域，海拔1140米，全球最大的湿地系统之一。由班韦乌卢湖（Lake Bangweulu）、班韦乌卢沼地（Bangweulu Swamps）和班韦乌卢平原（Bangweulu Flats）组成。班韦乌卢湖是班韦乌卢湿地的主干系统，它平均深4米，面积约3000平方公里，但在5月雨季结束时因班韦乌卢沼地和班韦乌卢平原被淹没而增加至15000平方公里；班韦乌卢沼地通常略大于班韦乌卢湖，面积约为9000平方公里，在雨季被淹没成为班韦乌卢湿地系统的一部分。该沼泽地生长着茂密的植被，对保护卢阿普拉河谷免受洪涝灾害起着极其重要的作用； &quot; title=&quot;班韦乌卢湿地系统&quot;>班韦乌卢湿地系统&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu2.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;15&quot; des=&quot;上海长江口中华鲟自然保护区（简称中华鲟保护区）世界上最大的河口湿地之一，也是中国为数不多和较为典型的咸淡水河口湿地。位于上海市崇明县长江口，北起八滧港，南起奚家港，，中心点距离上海市中心直线距离约78km，包括由崇明东滩已围垦的外围大堤与吴淞标高5米等深线围成的水域。保护区总面积576平方公里，其中核心区276平方公里，缓冲区和实验区300平方公里。总面积27,600公顷，以中华鲟及其赖以栖息生存的自然生态环境为主要保护对象，是中华鲟集中产卵及幼鱼生长的水域，也是其他鱼类洄游的重要通道和索饵产卵的重要场所。&quot; title=&quot;河口湿地——上海长江口中华鲟湿地自然保护区&quot;>河口湿地——上海长江口中华鲟湿地自然保护区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu2.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;18&quot; des=&quot;麦地卡湿地位于西藏那曲地区嘉黎县北部，面积43496公顷，平均海拔4900米，属于高原湖泊沼泽草甸湿地。是黑颈鹤、赤麻鸭等多种珍稀鸟类的迁徙走廊和繁殖地。有丰富的高原鱼类，对当地水土保持、防止季节性泛滥的洪水、阻截上游沉积物并形成生产力很高的草甸、沼泽湿地有重要作用。&quot; title=&quot;高原湖泊沼泽草甸湿地——麦地卡湿地&quot;>高原湖泊沼泽草甸湿地——麦地卡湿地&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu2.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;16&quot; des=&quot;鄂尔多斯遗鸥自然保护区是迄今为止全球唯一一处以保护遗鸥及其栖息地湿地生态环境为宗旨的国际重要湿地，位于东胜西部，核心区以陶力庙海--阿拉善湾海子为主要区域，距东胜市区50公里，自然保护区内湖泊、岛屿重多，湿地、沙地、草场遍布，形成了典型的荒漠、半荒漠湿地生态系统。保护区总面积约为555849公顷。其中湖水水面约十公里，岛屿5个，在中南部的两个岛屿上栖息着世界珍稀动物，国家一级保护动物遗鸥，数量达 7000只，占世界总数对60%以上，湖内还有东方白鹳、白尾海雕、白天鹅等各种鸟类85种。主要保护对象为四合木、半日花等古老残遗濒危植物和荒漠生态系统。&quot; title=&quot;遗鸥自然保护区——鄂尔多斯遗鸥自然保护区&quot;>遗鸥自然保护区——鄂尔多斯遗鸥自然保护区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu2.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;17&quot; des=&quot;是以迁徙鸟类及其栖息地为主要保护对象的湿地类型自然保护区，位于长江入海口，由崇明东滩团结沙外滩、东旺沙外滩、北八效外滩及其相临的吴淞标高零米线外侧3000米以内的河口水域四大部分组成，在海堤外呈半椭圆形分布。是长江口规模最大、发育最完善的河口型潮汐滩涂湿地，其南北狭，东西宽，区内潮沟密布，高、中、低潮滩分带十分明显，是亚太地区迁徙水鸟的重要通道，也是多种生物周年性溯河和降河洄游的必经通道。目前，已记录到的鸟类有17目50科288种(2005)。其中国家一级保护的鸟类有东方白鹳、黑鹳、白头鹤3种、国家二级保护的鸟类有白枕鹤、黑脸琵鹭、小天鹅等34种；列入《中国濒危动物红皮书》的鸟类20种；列入中日、中澳政府间候鸟及其栖息地保护协定的鸟类分别为156种和54种。&quot; title=&quot;河口型潮汐滩涂湿地——上海崇明东滩鸟类国家级自然保护区&quot;>河口型潮汐滩涂湿地——上海崇明东滩鸟类国家级自然保护区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu2.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;19&quot; des=&quot;山口红树林生态保护区地处亚热带，位于广西合浦县沙田半岛东西两侧，海岸线共50公里，总面积8000平方公里，是中国第二个国家级的红树林自然保护区。它由该半岛东侧和西侧的海域、陆域及全部滩涂组成。东侧是火山灰发育的土壤，滩涂淤泥肥沃，红树林生长特别茂盛。西岸滩涂全为淤泥质，适宜红树林生长。而且保护区所处地理位置光热条件较好，冬季低温影响小，海湾侵入内陆，封闭性好，风浪、潮汐、余流的作用较弱，岸滩比较稳定，海水污染程度很低，水质洁净，是红树林大面积分布和生存的理想区域。&quot; title=&quot;红树林湿地——山口国家红树林生态自然保护区&quot;>红树林湿地——山口国家红树林生态自然保护区&lt;/a>&lt;/li>" />
+					<input type="hidden" name="hidMenu3" id="hidMenu3" value="&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;21&quot; des=&quot;以波士华城市群，是世界第一大城市群。包括波士顿、纽约、费城、巴尔的摩、华盛顿等大城市以及200多个市镇。形如带状，长约1000KM，宽50~200KM，面积13.8万平方千米，占美国总面积的1.5%。人口6500万，占美国总人口的22.5%，城市化水平达到90%以上。&quot; title=&quot;世界第一大城市群——以纽约为中心的美国东北部大西洋沿岸城市群&quot;>世界第一大城市群——以纽约为中心的美国东北部大西洋沿岸城市群&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;22&quot; des=&quot;位于五大湖沿岸，从芝加哥向东到底特律、克里夫兰、匹兹堡以及加拿大多伦多和蒙特利尔。集中20多个人口100万以上的特大城市，是北美重要的制造业区。该城市群与美国东北部沿海城市群共同构成了北美的城市群。&quot; title=&quot;以芝加哥为中心的北美五大湖区城市群&quot;>以芝加哥为中心的北美五大湖区城市群&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;23&quot; des=&quot;又名东海道城市群。从东京湾的千叶开始，经东京，横滨、静冈、名古屋、大阪、神户直达北九州的长崎，呈条带状，从东北向西南延伸1000KM，占日本总面积的6%。人口将近7000万，占日本总人口的61%。&quot; title=&quot;以东京为中心的日本太平洋沿岸城市群&quot;>以东京为中心的日本太平洋沿岸城市群&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;24&quot; des=&quot;以伦敦——利物浦为轴线，由伦敦大城市经济圈、伯明翰城市经济圈、利物浦城市经济圈、曼彻斯特城市经济圈、利兹城市经济圈，面积4.5万平方千米，占国土的18.4%，人口3665万，占总人口的62.7%该城市集中了英国经济总量的80%。&quot; title=&quot;以伦敦为中心的英国城市群&quot;>以伦敦为中心的英国城市群&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;25&quot; des=&quot;包括上海市以及江苏（南京，苏州，无锡，常州，镇江，南通，扬州，泰州，盐城，淮安，连云港，宿迁，徐州），浙江（杭州，宁波，温州，嘉兴，湖州，绍兴，金华，衢州，舟山，台州，丽水）全境和安徽的合肥，马鞍山，芜湖，滁州，淮南共30个市，面积约10万平方千米，人口超过7000万。长三角是中国经济发展最活跃的地区之一，以仅占全国2.1%的国土面积，集中了全国1/4的经济总量和1/4以上的工业增加值，被视为中国经济发展的重要引擎。是中国经济最发达的地区。&quot; title=&quot;以上海为中心的中国长江三角洲城市群&quot;>以上海为中心的中国长江三角洲城市群&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;27&quot; des=&quot;梅溪镇位于安吉县境东北部，地处杭嘉湖（杭州、嘉兴、湖州）平原西部边缘。东接长兴县和吴兴区；北连长兴县；西邻本县天子湖镇；南接德清县和本县递铺镇、溪龙乡。全镇总面积192平方公里，辖22个行政村，3个社区居民委员会，总人口7万人。全年平均气温16.58℃，属亚热带季风气候，雨量充沛，年降水量800毫米。是典型的的棋盘式村落。&quot; title=&quot;棋盘式村落——梅溪镇&quot;>棋盘式村落——梅溪镇&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;28&quot; des=&quot;贝萨卢是一座位于菲盖雷斯以西约20公里的小镇，介于卡佩亚德斯河(Capellades)与弗卢比瓦河(Fluvia)之间，在历史上，这里不仅是到达圣地亚哥的重要中转站，在政治上更一度成为西班牙的宗教中心。早在1966年便被指定为西班牙国家历史文化遗产，是重要的民族文化以及中世纪艺术保护区&quot; title=&quot;依河流分布——贝萨卢&quot;>依河流分布——贝萨卢&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;29&quot; des=&quot;华西村位于江苏省江阴市华士镇，全村共有380户，1520人，面积0.96平方公里。2009年，华西村入选中国世界纪录协会中国第一村，华西村创造了中国世界纪录协会多项世界之最、中国之最。2011年，华西村GDP为500多亿人民币，相当于中西部一个中下等水平的地级市的GDP，略低于一个沿海中等县级市的GDP，高于绝大多数市直辖镇。&quot; title=&quot;中国最富乡村——华西村&quot;>中国最富乡村——华西村&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;30&quot; des=&quot;位于浙江省桐乡市，是江南著名古镇之一。镇域面积71.19 平方公里，建城区面积2.5平方千米，总人口6万，镇区常住人口1.2万。乌镇是典型的江南水乡古镇，乌镇原以市河（车溪）为界，分为乌青二镇，河西为乌镇，属湖州府乌程县；河东为青镇，属嘉兴府桐乡县。乌镇街道上民居以清代建筑为主，保存完好。全镇以河成街，桥街相连。各式民居、店铺依河筑屋，即有深宅大院、百年老屋，也有河埠廊坊，过街骑楼，是江南典型的“小桥、流水、人家”。乌镇为千年文化名镇，在历史上小镇曾出过64名进士、161名举人。茅盾、沈泽民、严独鹤等都为乌镇人。&quot; title=&quot;江南水乡古镇——乌镇&quot;>江南水乡古镇——乌镇&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;31&quot; des=&quot;云阳镇位于陕西省泾阳县中部偏东。东接三原县，西邻桥底镇、兴隆镇、口镇，南接燕王乡、三渠镇，北靠蒋路乡、龙泉乡。面积74.71平方公里，辖29个村（居）委会,人口5.8万人,耕地8.2万亩。云阳镇是我县蔬菜产业强镇，是西北最大的蔬菜集散地。2002年全镇蔬菜种植面积4.8万亩，其中日光温室大棚2950个，面积5900亩，露地菜2.6万亩，蔬菜产业总收入达到2.4亿元,鲜菜包装运销及相关行业从业人员1400人。全镇国内生产值达到4.7亿元，农民人均纯收入1960元。&quot; title=&quot;依道路分布——云阳镇&quot;>依道路分布——云阳镇&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;32&quot; des=&quot;波西塔诺小镇位于意大利坎帕尼亚大区萨莱诺省阿马尔菲海岸沿岸，是一个坐落在岩石上的童话小镇，城镇主要部分背山面海，分布在高山与大海之间的平地上。波西塔诺是意大利南部阿玛尔菲海岸最漂亮的小镇，小镇上的房子都盖在悬崖上，小巧而精致，而且房子五颜六色、鲜艳夺目，与湛蓝的海水、蔚蓝的天空和悠悠的白云相互印衬，鲜花星星点点的点缀着小镇，使得它更加神秘和美丽。&quot; title=&quot;依山而建——波西塔诺小镇&quot;>依山而建——波西塔诺小镇&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;46&quot; des=&quot;&quot; title=&quot;中国安徽省蒙城居民地&quot;>中国安徽省蒙城居民地&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;47&quot; des=&quot;&quot; title=&quot;印度西孟加拉邦居民地&quot;>印度西孟加拉邦居民地&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;48&quot; des=&quot;&quot; title=&quot;纽约居民地&quot;>纽约居民地&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;54&quot; des=&quot;&quot; title=&quot;埃及--开罗&quot;>埃及--开罗&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;55&quot; des=&quot;&quot; title=&quot;美国--拉斯维加斯&quot;>美国--拉斯维加斯&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;56&quot; des=&quot;&quot; title=&quot;合肥&quot;>合肥&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu3.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;135&quot; des=&quot;&quot; title=&quot;安徽桐城&quot;>安徽桐城&lt;/a>&lt;/li>" />
+					<input type="hidden" name="hidMenu4" id="hidMenu4" />
+					<input type="hidden" name="hidMenu5" id="hidMenu5" value="&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu5.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;34&quot; des=&quot;普若岗日冰川位于中国羌塘西北部的双湖特别区东北部90公里，属国家级羌塘保护区的核心区。距那曲镇560公里。普诺岗日冰川是除了南极、北极以外，世界第三大冰川，被誉为世界第三极，也是纬度地区最大的冰川。普诺岗日冰原面积422平方公里，冰原表面平坦，呈西北东南方向条形分布。冰原向四周山谷放射溢出50多条长短不等的冰舌，最低处海拔5350米。冰原周围有许多湖泊，靠冰川融水补给，最大的是冰源西侧的令戈措（也叫东湖）。湖泊和冰源之间，分布着大面积的沙漠，接近冰原处还有连续的新月开沙丘，仅在冰原东面沙漠面积就达500平方公里以上。    &quot; title=&quot;世界第三极----普若岗日冰川&quot;>世界第三极----普若岗日冰川&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu5.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;40&quot; des=&quot;是从珠穆朗玛峰流泻的主要冰川之一，也是世界最高的冰川，经常出现雪崩、冰崩、滑入冰体缝隙、连接冰体裂缝搭桥断裂等情况，被登山客称为“死亡地带”中最危险的地方。&quot; title=&quot;世界上最高的冰川——昆布冰川&quot;>世界上最高的冰川——昆布冰川&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu5.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;35&quot; des=&quot;塔斯曼冰川(Tasman Glacier)新西兰流动最大的冰川，是世界上最长的冰川之一。其长29公里，宽3.2公里，深600米。塔斯曼冰河每天以23到45公分不等的速度，缓缓的下滑，慢的几乎让人察觉不到 。作为距离海洋最近冰川的代表，尤其是在1995年以后至今，冰川迅速减少，冰川前缘比原来后退了近1公里的距离。&quot; title=&quot;距离海洋最近的冰川——塔斯曼冰川(Tasman Glacier)&quot;>距离海洋最近的冰川——塔斯曼冰川(Tasman Glacie&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu5.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;36&quot; des=&quot;托木尔峰地区是我国最大的现代冰川作用区之一，共用冰川829条，其中中国509条，冰川总面积2746平方公里，比两个祁连山冰川面积还大1.3倍，冰雪储量3500亿立方米，是中国冰川之最，比祁连山和珠穆朗玛峰地区冰雪储量的总和还大得多。其海拔4000米以上的冰雪覆盖层绵延数千公里，有雪豹、野骆驼、蒙古野驴、雪鸡和盘羊等极为珍惜的野生动物。&quot; title=&quot;中国第一冰川——托木尔冰川&quot;>中国第一冰川——托木尔冰川&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu5.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;37&quot; des=&quot;费琴科冰川是中北亚最长的山谷冰川，也是中低纬八大山谷冰川中最长的一条。位于塔吉克斯坦共和国境内，全长逾77公里(48哩)，覆盖面积约900平方公里(350平方哩)。自革命峰(6,974公尺〔22,880呎〕)冰原北流，纳127条支冰川。中段每日平均流动67公分(26吋)。冰川融化後的水形成苏尔霍布(Surkhob)河和阿姆(Amu)河源头。&quot; title=&quot;中低纬山谷冰川之最——费琴科冰川&quot;>中低纬山谷冰川之最——费琴科冰川&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu5.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;38&quot; des=&quot;兰伯特冰川（Lambert Glacier）位于南极洲，是世界上最大最长的冰川。冰川充填在一条长400千米、宽64千米、最大深度为2 500米的巨大断陷谷地中。它以每年平均350米的流速流注入海。冰川流动缓慢，约以每年0.23公里的速度滑过查尔斯王子山，最后在阿梅里冰锋区加速到每年1公里，虽然它不是一条快速移动的川，但却是一条移动量巨大的冰川，每年约有35立方公里的冰通过兰伯特冰川。&quot; title=&quot;世界上最大最长的冰川——兰伯特冰川&quot;>世界上最大最长的冰川——兰伯特冰川&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu5.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;39&quot; des=&quot;地处南纬52度高纬度地区，在阿根廷南部和纵贯南美大陆西部的安第斯山脉南段巴塔哥尼亚山脉东侧，属巴塔哥尼亚高原阿根廷圣克鲁斯省。冰川公园所在的冰川湖名为阿根廷湖，湖的面积达1414平方公里。阿根廷冰川国家公园内共有47条发源于巴塔哥尼亚冰原（地球南半球除南极大陆以外最大的一片冰雪覆盖的陆地）的冰川，其所在的阿根廷湖接纳了来自周围几十条冰川的冰流和冰块，最著名的是“活着”的冰川，莫雷诺冰川。&quot; title=&quot;世界最大陆地冰川——阿根廷国家冰川公园&quot;>世界最大陆地冰川——阿根廷国家冰川公园&lt;/a>&lt;/li>" />
+					<input type="hidden" name="hidMenu6" id="hidMenu6" value="&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;103&quot; des=&quot;委内瑞拉大草原分布在南美洲北部，位于委内瑞拉中部奥里诺科平原西半部，沿奥里诺科河延伸到哥伦比亚。北接里达内华达山脉，南接亚马逊森林，东临安第斯山脉北段。地跨委内瑞拉和哥伦比亚两国各一部分。地面平坦广阔，从安第斯山山麓附近向东缓缓倾斜，海拔一般为100-120米，周围较高，可达180-240米。旱季,雨水缺少,天气炎热。&quot; title=&quot;委内瑞拉大草原&quot;>委内瑞拉大草原&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;96&quot; des=&quot;呼伦贝尔草原是世界四大草原之一，别称是世界上最好的草原。东邻黑龙江省，西、北与蒙古国、俄罗斯相接壤，是中俄蒙三国的交界地带，与俄罗斯、蒙古国有1723公里的边境线。呼伦贝尔草原地域辽阔，风光旖旎，水草丰美，３０００多条纵横交错的河流，５００多个星罗棋布的湖泊，组成了一幅绚丽的画卷，一直延伸至松涛激荡的大兴安岭。&quot; title=&quot;呼伦贝尔草原&quot;>呼伦贝尔草原&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;97&quot; des=&quot;那拉提草原位于那拉提山北坡,是发育在第三纪古洪积层上的中山地草原。东南接那拉提高岭,势如屏障,西北沿巩乃斯河上游谷地断落,地势大面积倾斜,山泉密布,溪流纵横。 那拉提草原主要为亚高山草甸,由茂盛而绚丽的中生杂草与禾草构成,为糙苏、羽衣草群系。&quot; title=&quot;那拉提草原&quot;>那拉提草原&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;98&quot; des=&quot;锡林郭勒草原位于内蒙古自治区中部，北与蒙古国接壤，是世界四大草原之一，地势平坦，土壤肥沃，水草丰富，尤其以草原类型完整而著称于世，即草甸草原、典型草原、半荒漠草原、沙地草原均具备，地上植物达1200 多种。&quot; title=&quot;锡林郭勒草原&quot;>锡林郭勒草原&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;99&quot; des=&quot;若尔盖大草原地处四川、甘肃、青海三省结合部的中国西北大草原，是由若尔盖、阿坝、红原、壤塘四县组成，为中国五大草原之一，面积35600多平方公里，系以牧为主的藏族聚居地。这里有四川省最大的草原，面积近3万平方公里，由草甸草原和沼泽组成。草原地势平坦，一望无际，人烟稀少。草原海拔3500米至4000米左右，属典型的丘状高原。&quot; title=&quot;若尔盖大草原&quot;>若尔盖大草原&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;100&quot; des=&quot;那曲高寒草原被《中国国家地理》评为中国最美的六大草原之一 ，是中国五大牧场之一，位于昆仑山脉、唐古拉山脉和冈底斯山脉之间，面积约占西藏自治区的三分之二，平均海拔4500米以上。这片总面积达40多万平方千米的土地，就是人们常说的“羌塘”，整个地形呈西高东低倾斜，西高，中平，东低。&quot; title=&quot;那曲高寒草原&quot;>那曲高寒草原&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;101&quot; des=&quot;潘帕斯草原是亚热带型大草原，位于南美洲南部，包括阿根廷的布宜诺斯艾利斯省、拉潘帕省、圣非省、科尔多瓦省以及巴西南部的南里约格朗德州和乌拉圭全境。北连格连查科草原，南接巴塔哥尼亚高原，西抵安第斯山麓，东达大西洋岸，面积约76万平方公里。&quot; title=&quot;潘帕斯草原&quot;>潘帕斯草原&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;102&quot; des=&quot;格兰查科草原位于南美洲中部，属拉普拉塔平原北部。西界安第斯山麓，东界巴拉圭—巴拉那河，北接热带森林，南邻潘帕斯草原。地跨巴拉圭、玻利维亚、阿根廷三国各一部分。面积约65万平方公里。海拔介于100—400米。西部较高，有丘陵；向东地势逐渐降低，东边为沼泽低地。南回归线横贯境内，是南美洲夏季最热地区之一。&quot; title=&quot;格兰查科草原&quot;>格兰查科草原&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;104&quot; des=&quot;主要分布在澳大利亚的中西部地区。草地面积约为4.2亿公顷。由于澳大利亚的降水量自北、东、南沿海向内陆减少，呈半环状分布，植被类型的分布也因而有类似的图式，即外缘是森林，向内陆是广阔的干草原，中央是荒漠。在澳大利亚国土四周沿海地区，特别是东南部及北部的某些地区，自然植被为茂盛的草原，由于降雨量较高，人工草地较多。&quot; title=&quot;澳洲大草原&quot;>澳洲大草原&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;105&quot; des=&quot;普列利草原也称北美大草原，是典型的温带草原，世界著名大草原之一，是世界上面积最大的禾草草地，位于北美大陆中部，落基山脉以东至密西西比河之间，北至加拿大中部，南至德州，沿山地走向纵贯南北，约跨了30个纬度。而东西狭长，不超过20个经度。该区地形以无树的草丘为主，植被随着干燥度的增加，由高草普列利，混合普列里到矮草普列利。大致相当于欧亚草原的草甸草原，典型草原和荒漠草原。&quot; title=&quot;普列利草原&quot;>普列利草原&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;106&quot; des=&quot;西干草原是欧亚大陆草原的西半部分，由东欧平原东南部的东欧大草原和中亚草原组成，自欧洲多瑙河下游起，呈连续带状往东延伸，经东欧平原、西西伯利亚平原、哈萨克丘陵，向东延伸4,000公里至阿尔泰山。这一地区河流众多，一般流向南方，为进入较暖地带的通道。西干草原气候有明显的季节性变化，冬季寒冷，夏季炎热，降雨量自西往东逐渐减少。&quot; title=&quot;西干草原&quot;>西干草原&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;107&quot; des=&quot;伊希姆草原又名“伊希姆平原”。在俄罗斯西西伯利亚平原的南部、额尔齐斯河同托博尔河之间。主要是小岗丘和浅凹地地形，地势低平，海拔120-140米。多湖沼。伊希姆河纵贯全境，并用于排水。主要为草甸草原，间有小片桦林。以黑钙土和灰色森林土为主。南部已多辟为农田。为西伯利亚主要农牧区之一。&quot; title=&quot;伊希姆草原&quot;>伊希姆草原&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;108&quot; des=&quot;苏丹草原以热带草原为特征的一个非洲自然地带，是非洲稀树草原的一部分，在刚果雨林以北。北界撒哈拉沙漠，南接几内亚湾沿岸和刚果河（扎伊尔河）流域的热带森林，东邻埃塞俄比亚高原，西濒大西洋。大部为海拔500-1，000米的高原。夏湿热，冬干热，年降水量自北向南从250毫米递增到1，000毫米左右，有苏丹式气候之称。&quot; title=&quot;苏丹草原&quot;>苏丹草原&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu6.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;109&quot; des=&quot;塞伦盖蒂草原位于东非大裂谷南部、坦桑尼亚联合共和国北部，坦桑尼亚西北部至肯尼亚西南部的地区，南纬1至3度，东经34至36度，马拉、阿鲁沙、希尼安家3区境内广阔的草原上，面积30,000平方公里。1956年它与恩戈罗生物保护区合成一片，得到国际公认被列入《世界文化与自然遗产名录》，成为联合国教科文组织人与生态中的生物保护区.&quot; title=&quot;塞伦盖蒂草原&quot;>塞伦盖蒂草原&lt;/a>&lt;/li>" />
+					<input type="hidden" name="hidMenu7" id="hidMenu7" value="&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;110&quot; des=&quot;撒哈拉沙漠约形成于二百五十万年前，世界第二大荒漠（仅次于南极洲），是世界最大的沙质荒漠。它位于非洲北部，占全洲总面积的四分之一。东西约长4,800公里，南北在1300公里至1900公里之间，总面积约9065000平方公里，约容得下整个美国本土。撒哈拉沙漠西从大西洋沿岸开始，北部以阿特拉斯山脉和地中海为界，东部直抵红海，南部到达苏丹和尼日尔河河谷。&quot; title=&quot;撒哈拉沙漠&quot;>撒哈拉沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;111&quot; des=&quot;卡拉哈里沙漠也称卡拉哈里盆地，位于非洲南部内陆干燥区。面积约57万平方公里。主要在博茨瓦纳和纳米比亚境内。大部为内陆盆地，四为高原和山地。盆地内地势起伏不大,偶见孤立岛山；中部有一条东西向的低矮分水岭，分盆地为南、北两部分。南部以荒漠、半荒漠为主，散布有沙丘和盐沼；北部多沼泽、湖泊和洼地。&quot; title=&quot;卡拉哈里沙漠&quot;>卡拉哈里沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;112&quot; des=&quot;纳米布沙漠位于非洲西南部边缘，大西洋沿岸。北起安哥拉的木萨米迪什，南经纳米比亚至奥兰治河，面积约20万平方公里。为一狭长带状沿海平原沙漠，海拔不超过 500 米。地势由内陆向沿海呈阶梯状降低。北部经河流切割为峡谷；南部多为流沙。广布大面积的移动新月形沙丘，其移动速度很快，有的可达 450米／年。&quot; title=&quot;纳米布沙漠&quot;>纳米布沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;113&quot; des=&quot;卡拉库姆沙漠是中亚地区大沙漠，占据土库曼约70%的面积。。突厥语意为“黑沙漠”。世界第四大沙漠。位于里海东岸的土库曼斯坦境内，阿姆河以西。面积35万平方公里。属温带大陆性干旱气候。年降水量不足200毫米。河流、湖泊稀少。沿阿姆河、捷詹河、穆尔加布河等有绿洲。大部地区可供放牧。有硫磺、石油、天然气等矿藏。&quot; title=&quot;卡拉库姆沙漠&quot;>卡拉库姆沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;114&quot; des=&quot;阿拉伯沙漠位于亚洲西南部的阿拉伯半岛上，出现在半岛的大部份区域内，由也门延伸至波斯湾、阿曼至约旦及伊拉克。大部分位于沙特阿拉伯，但有一大部分延伸至约旦、伊拉克、科威特、卡塔尔、阿拉伯联合酋长国、阿曼和也门。其地形为几座山脉所切断，海拔最高点达3,700米，三面以高崖为界。&quot; title=&quot;阿拉伯沙漠&quot;>阿拉伯沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;115&quot; des=&quot;塔尔沙漠是南亚西北部沙漠，亦称为大印度沙漠，位于印度西北部和巴基斯坦东南部，西以印度河、萨特卢杰河为界，东以印度马尔瓦高原东侧为缘。海拔100～200米，面积近30万平方公里。主要为沙质荒漠，东南部多砾漠，沙丘一般高达30～90米，沙垄、盐滩地、龟裂地广布。沙漠中有季节性盐湖及干河道，地下水位埋藏较深。&quot; title=&quot;塔尔沙漠&quot;>塔尔沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;116&quot; des=&quot;澳大利亚沙漠位于澳大利亚的西南部，面积约155万平方公里，是澳大利亚最大的沙漠，世界第四大沙漠，其由大沙沙漠、维多利亚沙漠、吉布森沙漠、辛普森沙漠四部分组成。这里雨水稀少，干旱异常。夏季的最高温度可达50摄氏度。这里物种丰富，多样性强，被发现者称为沙漠花园。&quot; title=&quot;澳大利亚沙漠&quot;>澳大利亚沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;117&quot; des=&quot;巴塔哥尼亚沙漠位于南美洲南部的阿根廷，在安第斯山脉的东侧，面积约67万平方公里。巴塔哥尼亚一般是指南美洲安地斯山以东，科罗拉多河以南的地区，主要位在阿根廷境内，小部分则属于智利。该地区的地形主要是高原以及窄小的海岸平原，各河流发源于安地斯山，向东流入大西洋，切割成河谷，但因当地雨量不多，河流大多属于间歇河，南部有许多冰河地形如峡湾等。&quot; title=&quot;巴塔哥尼亚沙漠&quot;>巴塔哥尼亚沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;118&quot; des=&quot;阿塔卡马沙漠位于南美洲智利的北部。面积约16万平方公里，南北长约1100公里。阿塔卡马沙漠从智利与秘鲁交界处向南延伸约960公里，地势一般比海平面要高得多，它由一连串盐碱盆地组成，几乎没有植物。在沙漠中心，有一个被气候学家们称为“绝对沙漠”的地方，这就是地球上最为干旱的地方——地球旱极。&quot; title=&quot;阿塔卡沙漠&quot;>阿塔卡沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;119&quot; des=&quot;位于南伽里佛尼亚的莫哈韦沙漠和位于下加利福尼亚半岛的索诺兰沙漠是北美洲著名的沙漠。尤其是被称为“神秘沙漠”的索诺兰沙漠，它的范围遍及亚利桑那州南部、加州东南部、墨西哥的索诺拉州，以及下加利福尼亚半岛的大部分区域，面积26万平方公里，包含六种生物群集，有的较潮湿、有的较炎热、有的较崎岖，地球上数以千计最奇特的动植物种类就在这些栖地上繁衍。&quot; title=&quot;莫哈韦沙漠与索诺兰沙漠&quot;>莫哈韦沙漠与索诺兰沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;120&quot; des=&quot;奇瓦瓦沙漠绝大部分在墨西哥境内，是墨西哥面积最大的一个沙漠，也是北美洲最大的沙漠，东北部与美国接壤，面积245612平方公里（具体数字众说纷纭），占墨西哥总体面积的12.6%，与英国相当。奇瓦瓦沙漠相当干燥，位于其东、西两侧的马德雷山脉，阻隔了来自墨西哥湾和太平洋的潮湿气流，这也是其主要成因之一。&quot; title=&quot;奇瓦瓦沙漠&quot;>奇瓦瓦沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;121&quot; des=&quot;大戈壁即戈壁沙漠，是世界上巨大的荒漠与半荒漠地区之一，面积104万平方公里，是世界上第五大沙漠。地势起伏平缓、地面覆盖大片砾石的荒漠。绵亘在中亚浩瀚的戈壁大地，跨越蒙古和中国广袤的空间。戈壁多数地区不是沙漠而是裸岩。戈壁的界限北抵阿尔泰山和杭爱山；东接大兴安岭西缘；南至阿尔金山、北山和阴山；西达东天山。&quot; title=&quot;大戈壁&quot;>大戈壁&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;122&quot; des=&quot;塔克拉玛干沙漠位于南疆塔里木盆地中心，是中国最大的沙漠，也是世界第十大沙漠，同时亦是世界第二大流动沙漠。整个沙漠东西长约1000公里，南北宽约400公里，面积达33万平方公里，沙漠在西部和南部海拔高达1200～1500米，在东部和北部则为800～1000米。沙丘高度一般在100-200米，最高达300米左右。&quot; title=&quot;塔克拉玛干沙漠&quot;>塔克拉玛干沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;123&quot; des=&quot;古尔班通古特沙漠位于新疆准噶尔盆地中央，玛纳斯河以东及乌伦古河以南，是中国第二大沙漠，同时也是中国面积最大的固定、半固定沙漠。古尔班通古特沙漠面积有大约4.88万平方公里，海拔300～600米，水源较多。由4片沙漠组成,西部为索布古尔布格莱沙漠，东部为霍景涅里辛沙漠，中部为德佐索腾艾里松沙漠，其北为阔布北—阿克库姆沙漠。&quot; title=&quot;古尔班通古特沙漠&quot;>古尔班通古特沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;124&quot; des=&quot;位于我国内蒙古自治区阿拉善盟阿拉善右旗北部，雅布赖山以西、北大山以北、弱水以东、拐子湖以南。位于北纬39°30’～42°，东经98°30’～104°，面积4.43万平方公里。是我国第三大沙漠，其中西北部还有1万多平方公里的沙漠至今有人类的足迹。主要属内蒙古额济纳旗和阿拉善右旗，东部小范围属阿拉善左旗。&quot; title=&quot;巴丹吉林沙漠&quot;>巴丹吉林沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;125&quot; des=&quot;腾格里沙漠中国第四大沙漠，位于内蒙古自治区阿拉善左旗西南部和甘肃省中部边境，南越长城，东抵贺兰山，西至雅布赖山。介于北纬37°30′至40°，东经102°20′至106°。面积约3万平方公里，海拔1200～1400米左右。沙漠内部，沙丘、湖盆、盐沼、草滩、山地及平原交错分布。其中沙丘占71%，其中7%属于固定 、半固定沙丘。&quot; title=&quot;腾格里沙漠&quot;>腾格里沙漠&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu7.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;126&quot; des=&quot;科尔沁沙地是中国最大的沙地，位于大兴安岭和冀北山地之间的三角地带。地科尔沁沙地面积大约5.06万平方千米。势是南北高，中部低；西部高，东部低。西辽河水系贯其中。地貌最显著的特点是沙层有广泛的覆盖，丘间平地开阔，形成了坨甸相间的地形组合，当地人称它为“坨甸地”。&quot; title=&quot;科尔沁沙地&quot;>科尔沁沙地&lt;/a>&lt;/li>" />
+					<input type="hidden" name="hidMenu8" id="hidMenu8" value="&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;50&quot; des=&quot;&quot; title=&quot;陕西省榆林市黄土高原耕地&quot;>陕西省榆林市黄土高原耕地&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;57&quot; des=&quot;&quot; title=&quot;云南梯田&quot;>云南梯田&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;60&quot; des=&quot;&quot; title=&quot;日本松山地区耕地日本松山地区耕地&quot;>日本松山地区耕地日本松山地区耕地&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;61&quot; des=&quot;&quot; title=&quot;埃及新河谷省穆特--绿洲&quot;>埃及新河谷省穆特--绿洲&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;62&quot; des=&quot;&quot; title=&quot;巴西亚马逊里奥朗斯库&quot;>巴西亚马逊里奥朗斯库&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;63&quot; des=&quot;新增耕地—南美森林开垦&quot; title=&quot;巴拉圭博克龙省&quot;>巴拉圭博克龙省&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;64&quot; des=&quot;&quot; title=&quot;伊拉克&quot;>伊拉克&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;65&quot; des=&quot;&quot; title=&quot;墨西哥奇瓦瓦州&quot;>墨西哥奇瓦瓦州&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;66&quot; des=&quot;&quot; title=&quot;埃及焦夫&quot;>埃及焦夫&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;70&quot; des=&quot;位于美国五大湖以南的中央大平原密西西比河一带，分布在北纬38°-40°之间，土壤类型为黄土。主要是生产规模大，机械化程度高的商品谷物农业。它是世界上面积最大、产量最高的玉米产区，玉米产量占全国的3/4，主要用作饲料。&quot; title=&quot;美国玉米带&quot;>美国玉米带&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;71&quot; des=&quot;该区域以种植春小麦为主，在北纬46°-53°之间，主要位于北达科他州，蒙大拿州东部地区，加拿大的艾尔伯塔省以及萨斯喀彻温省南部靠近美国边界的400公里范围内。&quot; title=&quot;北美春小麦种植区&quot;>北美春小麦种植区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;134&quot; des=&quot;&quot; title=&quot;利雅得机灌耕地&quot;>利雅得机灌耕地&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;139&quot; des=&quot;&quot; title=&quot;若羌&quot;>若羌&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;72&quot; des=&quot;在美国的堪萨斯州，科罗拉多州东部以及俄克拉何马州和得克萨斯州部分地区均有高密集的冬小麦种植区域，是生产规模大，机械化程度高的商品谷物农业。&quot; title=&quot;美国冬小麦种植区&quot;>美国冬小麦种植区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;73&quot; des=&quot;该区域位于潮湿的潘帕斯草原上，是阿根廷最重要的农牧业区，并成为阿根廷政治、经济、交通和文化的心脏地区。现大部分已开垦成农田和牧场，盛产小麦、玉米、饲料、蔬菜、水果、肉类、皮革等。&quot; title=&quot;阿根廷潘帕农牧业区&quot;>阿根廷潘帕农牧业区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;74&quot; des=&quot;该区域经济发达，约占国土面积一半,包括半温带地区和热带雨林地区。土地肥沃、基础设施雄厚，多现代化的商业性农场，其规模大得惊人，最大的可以达到几万、甚至几十万公顷，采用现代科学技术和经营管理方法，有大量的资本投入和高科技投入，熟练农业劳动力资源丰富。&quot; title=&quot;巴西南部和东南部农业区&quot;>巴西南部和东南部农业区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;75&quot; des=&quot;分布在中国东北平原上，从黑龙江南部起始，包括吉林省全省，延伸到辽宁北部的这片区域，处于北纬40°-42°之间，土壤为黑土和黑钙土，气候为温带季风气候。是中国重要的商品粮基地之一，生产规模大，机械化程度高。&quot; title=&quot;中国东北玉米带&quot;>中国东北玉米带&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;76&quot; des=&quot;该区域处于温带季风气候区，雨热同季，分布在华北平原上，主要涉及江苏、河南、山东、河北、北京、天津等省。农作物以冬小麦为主，是中国重要的粮食生产基地。&quot; title=&quot;中国东部小麦带&quot;>中国东部小麦带&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;77&quot; des=&quot;位于东欧平原上，从匈牙利平原，莫拉雅河谷，特兰西瓦尼亚流域延伸经过乌克兰和白俄罗斯到俄罗斯中部区域的高地，伏尔加河高地，冬小麦主要集中分布在北部的高加索和格鲁吉亚区域，然而春小麦的耕种是从更靠东的区域延伸至西伯利亚的南部。该区域的“乌克兰玉米带”是世界三大黄金玉米带之一。&quot; title=&quot;欧洲小麦-玉米带&quot;>欧洲小麦-玉米带&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;78&quot; des=&quot;欧洲西部广义上的范围主要是指德国奥地利意大利等国家（含以上国家）以西的欧洲，该地区农业多以具有高附加值的生畜海产养殖和具有高经济价值的作物种植业为主。具体细分欧洲西部又具有明显的多样性.&quot; title=&quot;欧洲西部农业区&quot;>欧洲西部农业区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;79&quot; des=&quot;水稻是东南亚各国的主要种植的粮食作物。该区域为热带季风气候和热带雨林气候，热量充足，降水丰富，适宜水稻生长；多为河流中下游地区水源充足，地形平坦，土壤肥沃，利于种植水稻；人口稠密，劳动力丰富，可以实现精耕细作。&quot; title=&quot;东南亚水稻种植区&quot;>东南亚水稻种植区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;80&quot; des=&quot;主要指在巴基斯坦、印度、孟加拉三国的耕地。该区域传统农业占优势，对气候和雨水等自然条件的依赖性较大，以传统的生产工具和手工劳动为主，现代投入较少。农业以种植业为主，种植业又以粮食作物为主。主要种植小麦、大米、玉米、大豆和棉花等。&quot; title=&quot;南亚农业区&quot;>南亚农业区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;81&quot; des=&quot;主要是位于东非高原维多利亚湖周边的坦桑尼亚、肯尼亚、乌干达等国家。该地区农业自给、半自给性生产同商品性生产并存　坦桑尼亚的农业经济类型复杂、多样，大部分地区还是以传统方式经营的自给、半自给性生产和小商品生产。生产的粮食作物主要是小麦、玉米、高粱和大豆等；经济作物主要是香蕉、咖啡等。&quot; title=&quot;环维多利亚湖农业区&quot;>环维多利亚湖农业区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;82&quot; des=&quot;澳大利亚全国有2个以种植业为主的农业区，主要集中在澳大利亚大陆的东南角和西南角：①集约农业带，又称高雨量带。其范围从昆士兰州北部海岸延伸到南澳洲的东南角，以及西澳州的西南部和塔斯马尼亚，降水较充沛，适于发展种值业和奶牛业；②小麦、养牛带，其范围从昆士兰州中部向南延伸，经过新南威尔士州坡地至维多利亚北部和南澳洲农业区.&quot; title=&quot;澳大利亚农业区&quot;>澳大利亚农业区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;136&quot; des=&quot;&quot; title=&quot;慕尼黑耕地&quot;>慕尼黑耕地&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu8.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;137&quot; des=&quot;&quot; title=&quot;库尔勒&quot;>库尔勒&lt;/a>&lt;/li>" />
+					<input type="hidden" name="hidMenu9" id="hidMenu9" value="&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu9.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;127&quot; des=&quot;马基群落亦称地中海夏旱灌木群落。在科西嘉岛的民族地方名称又叫马克维斯群落，是硬叶和石南状叶以及帚状型植物组成的，常绿灌木和矮乔木组成的密灌丛。大约1.5至2.5米。分布在整个地中海地区，西部，尤其科西嘉岛最甚。优势种有大果黑钩叶，淡红半日花属，夹竹桃，乳香黄连木。&quot; title=&quot;马基群落&quot;>马基群落&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu9.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;128&quot; des=&quot;佛里干那群落是希腊的硬叶灌丛名称。亦称希腊有刺灌木群落。分布于巴尔干半岛，特别是希腊、克里特岛和小亚细亚等地。典型植物大多是有刺的常绿灌木，与芳香的唇形科灌木和帚状灌木共同组成群落。有刺灌木常呈球状或半球状，如刺叶染料木、刺叶大戟等。&quot; title=&quot;佛里干那群落&quot;>佛里干那群落&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu9.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;129&quot; des=&quot;丰博斯（Fynbos）群落，位于非洲大陆西南部的南非开普半岛好望角。好望角省的地带性植被与马基群落类似，以硬叶常绿灌丛为主，占优势植物主要是具有石南型和针叶型叶子的不同科的种，石南种植物和龙眼科植物种类最多，起作用最大。&quot; title=&quot;丰博斯（Fynbos）群落&quot;>丰博斯（Fynbos）群落&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu9.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;130&quot; des=&quot;斯克雷布群落，是在澳大利亚西南和东南地区非常发育的常绿灌木群落，与地中海的马基群落相似。&quot; title=&quot;斯克雷布群落&quot;>斯克雷布群落&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu9.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;131&quot; des=&quot;卡汀珈群落又称浅色旱热落叶矮灌木林，是分布在南美巴西高原东北部热带多刺疏林的当地名称。群落中包括热带旱生具刺落叶疏林和刺灌丛等类型，散生，相距较远，大多数旱季落叶。多刺肉质植物很多，典型乔木如木棉科的纺锤树，其树干膨大如大萝卜，木质部为疏松柔软的特殊贮水室。&quot; title=&quot;卡汀珈群落&quot;>卡汀珈群落&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu9.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;132&quot; des=&quot;阿根廷灌木丛林分布在潘帕斯草原西部和西南部。生长喜旱的林木，及来自查科地区的林木种类（除崩断斧树外）。树木较矮，且分布散落，系开放型林地，林层多为一至二级的灌木层和草木层，高度不超过10米，并同棕榈层、草原林及禾本科植物交错生长。&quot; title=&quot;阿根廷灌木丛林&quot;>阿根廷灌木丛林&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu9.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;133&quot; des=&quot;内华达灌丛，位于美国西部，沿内华达山脉分布。在内华达山脉，除高山区以外，山脉两侧都生长著浓密常绿阔叶灌丛，主要有矮栎、熊果和加利福尼亚常绿灌木。&quot; title=&quot;内华达灌丛&quot;>内华达灌丛&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu9.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;140&quot; des=&quot;沙帕拉群落，又称为北美夏旱灌木群落，发育在北美西岸的硬叶常绿灌丛，与马基群落十分相似。分布特别茂密。在墨西哥也能遇到沙帕拉群落，它是由含羞草科和仙人掌属的一些种。&quot; title=&quot;沙帕拉群落&quot;>沙帕拉群落&lt;/a>&lt;/li>" />
+					<input type="hidden" name="hidMenu10" id="hidMenu10" value="&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu10.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;83&quot; des=&quot;亚马逊森林是一个热带的奇迹，是当今世界上保存最原始最大最好的热带雨林。远离都市的尘嚣和人类工业、商业的文明使得亚马逊热带丛林成为一座返璞归真的孤岛绿洲，它覆盖了南美洲200万平方英里的土地面积，占去了巴西的大片土地和厄瓜多尔、哥伦比亚、玻利维亚、委内瑞拉、秘鲁和圭亚那的部分领土，被称为“地球之肺”和“绿色心脏”。&quot; title=&quot;亚马逊森林&quot;>亚马逊森林&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu10.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;84&quot; des=&quot;世界上的三大热带雨林之一，面积仅次于南美洲亚马孙盆地热带雨林，有“地球第二肺”之称。主要分布在刚果盆地，它的一半以上位于中部非洲国家刚果（金）境内。刚果雨林种类较贫乏，但有大量的特有种。其中棕榈科植物尤其引人注意，如棕榈、油椰子等，咖啡属种类很多( 全世界具有 35 种，非洲占 20 种 ) 。&quot; title=&quot;非洲刚果雨林&quot;>非洲刚果雨林&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu10.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;85&quot; des=&quot;世界上的三大热带雨林之一，主要分布在菲律宾群岛、马来半岛、中南半岛的东西两岸，恒河和布拉马普特拉河下游，斯里兰卡南部以及中国的南部等地。其特点是以龙脑香科为优势，缺乏具有美丽大型花的植物和特别高大的棕榈科植物，但具有高大的木本真蕨八字桫椤屑以及著名的白藤属和兰科附生植物。&quot; title=&quot;亚洲雨林&quot;>亚洲雨林&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu10.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;86&quot; des=&quot;寒温带的针叶林又叫泰加林，原是指西西伯利亚带有沼泽化的针叶林。西伯利亚的泰加林是世界上最大的森林，面积从俄西伯利亚向北延伸到北极冻土带，从俄罗斯欧洲部分再到白令海峡。西西伯利亚的主要树种是欧洲赤松；俄罗斯光松约占15%；常称为暗针叶树种的云杉和冷杉在西西伯利亚分别占6%占5%；落叶树种主要是桦木、欧洲山杨和柳树，其中桦木最常见，面积为1 670万公顷，占森林总面积的22%。&quot; title=&quot;西伯利亚泰加林&quot;>西伯利亚泰加林&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu10.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;87&quot; des=&quot;科米原始森林位于俄罗斯乌拉尔山麓，占地面积为328万公顷，其中有65万公顷属于缓冲地带，是目前欧洲现存面积最大的一片原始森林。森林中自然风光秀美无比，有着完整而平衡的生态系统，许多珍贵稀有的物种都在这里安家落户。&quot; title=&quot;科米原始森林&quot;>科米原始森林&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu10.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;88&quot; des=&quot;北美洲分布着大面积的暗针叶林。它的面积仅次于欧亚大陆，从大西洋沿岸一直分布到太平洋沿岸，横贯整个北美大陆。北美洲大西洋沿岸的针叶林与欧亚大陆的泰加林相类似，从海岸线一直延伸到西部的落基山下。&quot; title=&quot;北美洲暗针叶林&quot;>北美洲暗针叶林&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu10.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;89&quot; des=&quot;落基山以东的太平洋沿岸的针叶林面积较小，但那里气候比较温暖湿润，不是典型的寒温带针叶林气候，森林沿海岸向南延伸，已经不属于北方泰加林的范畴，而带有亚热带森林的特征，被称为“温带雨林”。这是世界上最高大的针叶林，比北方泰加林高大繁茂，种类也更丰富，保存了种类最多的针叶树种，其中有不少是古老的孑遗物种。&quot; title=&quot;落基山温带雨林&quot;>落基山温带雨林&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu10.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;91&quot; des=&quot;丹翠雨林位于澳大利亚昆士兰州凯尔斯以北，它不仅是世界上最古老的热带雨林，还拥有地球上最多的动植物种类。丹翠雨林浓郁的树冠下栖息着澳大利亚三分之一的蛙类、有袋动物和爬行动物种类，以及近三分之二的蝙蝠和蝴蝶种类。这片巨大的雨林还是约430种鸟类的家园，其中有13种是世界其他地方所没有的。&quot; title=&quot;丹翠雨林&quot;>丹翠雨林&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu10.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;90&quot; des=&quot;我国大兴安岭北部的落叶针叶林是欧亚大陆北方针叶林的一部分，属于东西伯利亚南部落叶针叶林沿山地向南的延续部分。大兴安岭山地海拔高度约600-1000米，有些山峰接近1400米。年平均温度为-1.2℃——-5℃以下，七月平均气温为16～20℃，全年积温(持续日均温>10℃之总和)为1100-1700℃，无霜期为70-100天，年降水量为400-600毫米。由于生长素气温低，空气相对湿度较大。&quot; title=&quot;大兴安岭北部兴安落叶松林&quot;>大兴安岭北部兴安落叶松林&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu10.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;92&quot; des=&quot;其前身是&quot;澳大利亚东海岸温带与亚热带雨林公园&quot;，坐落在澳大利亚东海岸最显著的斜坡处。著名的地质学景观环绕着火山口防护罩展现在人们面前。在这里还可以观赏到大量的濒临绝迹的多种雨林。这里保存着澳大利亚大约一半的植物种群和三分之一的哺乳动物与鸟类。&quot; title=&quot;澳大利亚中东部雨林保护区&quot;>澳大利亚中东部雨林保护区&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu10.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;93&quot; des=&quot;马达加斯加在印度洋西部，是非洲大陆的离岛，与非洲大陆隔海相望。它的森林覆盖率占国土面积的22%。马达加斯加森林是非洲雨林群系的一部分，天然森林类型复杂多样,原生性的森林群落主要为常绿林，落叶林以及多刺、肉质的落叶灌木丛.在不同类型的岩石露头发育着矮林;高山上可见顶矮林，滨海温地为红树林.&quot; title=&quot;马达加斯加森林&quot;>马达加斯加森林&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu10.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;94&quot; des=&quot;黑森林是德国最大的森林山脉，位于德国西南部的巴登-符腾堡州。人们之所以称其为“黑森林”，是因为山上林区内的森林密布，远远望去显得黑压压的一片。广意的黑森林分南北中三部分：北部黑森林，从巴登巴登到弗罗伊登施塔特，这部分的森林非常茂密；沿着蜿蜒的公路，两侧是大片的松树和杉树的原始森林.&quot; title=&quot;黑森林&quot;>黑森林&lt;/a>&lt;/li>&lt;li class=&quot;list002&quot;>&lt;img src=&quot;images/menu10.png&quot; width=&quot;20&quot; />&lt;a href=&quot;#&quot; cid=&quot;95&quot; des=&quot;西双版纳热带雨林位于云南省南部西双版纳傣族自治州景洪市、勐腊县、勐海县境内。总面积2854.21平方公里，它的热带雨林、南亚热带常绿阔叶林、珍稀动植物种群，以及整个森林生态都是无价之宝，是世界上唯一保存完好、连片大面积的热带森林，深受国内外瞩目。&quot; title=&quot;西双版纳热带雨林&quot;>西双版纳热带雨林&lt;/a>&lt;/li>" />
+					<ul class="menu" >
+						<li  style="font-family:宋体;width: 300px; height: 20px;  vertical-align:center;">
+						</li>
+						<li style="margin-bottom: 15px;">
+							<img src="images/menu1.png" />
+							<span>水体</span></li>
+						<li style="margin-bottom: 15px;">
+							<img src="images/menu2.png" />
+							<span>湿地</span></li>
+						<li style="margin-bottom: 15px;">
+							<img src="images/menu3.png" />
+							<span>人造地表</span></li>
+						<li style="margin-bottom: 15px;">
+							<img src="images/menu4.png" />
+							<span>苔原</span></li>
+						<li style="margin-bottom: 15px;">
+							<img src="images/menu5.png" />
+							<span>冰川和永久积雪</span></li>
+						<li style="margin-bottom: 15px;">
+							<img src="images/menu6.png" />
+							<span>草地</span></li>
+						<li style="margin-bottom: 15px;">
+							<img src="images/menu7.png" />
+							<span>裸地</span></li>
+						<li style="margin-bottom: 15px;">
+							<img src="images/menu8.png" />
+							<span>耕地</span></li>
+						<li style="margin-bottom: 15px;">
+							<img src="images/menu9.png" />
+							<span>灌木地</span></li>
+						<li style="margin-bottom: 15px;">
+							<img src="images/menu10.png" />
+							<span>森林</span></li>
+
+					</ul>
+					<ul class="list" >
+						<li class="list001 list003">水体</li>
+					</ul>
+					<ul class="list2" style="overflow-y:auto;">
+						<li class="list001 list003">描述</li>
+						<li><span ></span></li>
+					</ul>
+
+				</div>
+				<div id="left-col" style="display:none;">
+					<div id="product_time" style="display:none;">
+						<div id="time_title" >
+						</div>
+						<div class="border" >
+							<select id="time_lei" width="250px">
+								<option value="2010">2010</option>
+							</select>
+						</div>
+					</div>
+					<div id="product_range">
+						<div id="space_title"  class="list001 list003" style="display:none;">
+						</div>
+						<div class="list001 list003"> 选择图幅范围</div>
+						<div class="border" style="height: 187px;">
+							<div id="manual" style="margin-left: 14px; font-family:Arial; ">
+								图幅</div>
+							<div id="byCoordinate" style="font-family:Arial; ">
+								坐标</div>
+							<div id="byMap" style="font-family:Arial; ">
+								范围</div>
+							<div id="range_write">
+								<div id="searchSpan" class="shuru">
+									图幅号：
+									<input class="tufuhao" type="text" value="" id="tufuhao1" /><br />
+									<font class="itufu">(例如：S51_20,S52_20)</font>
+								</div>
+								<div id="zuobiaochuan" class="shuru" style="display: none">
+									坐标串：
+									<input class="tufuhao" type="text" value="" id="tufuhao2" /><br />
+									<font class="itufu">(例如：129.3 -18.6,122.6 -23.9,132.6 -28.3,140.5 -29,145.2 -25,145.6
+										-21.2,144.7 -18.8,141.8 -17,139.2 -15.3,137 -15.1,129.3 -18.6)</font>
+								</div>
+								<div style="height: 25px; width: 200px;">
+									<div style="float: left;">
+										<input type="button" id="dituchakan" /></div>
+									<div style="float: left; margin-left: 5px;">
+										<input type="button" class="tijiao" /></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="product_result">
+						<div id="result_title" class="list001 list003">
+							结果列表</div>
+						<div id="result_data" class="border" style="height:150px;margin-right: 7px; padding-left: 3px;padding-bottom:10px; overflow-y:auto;">
+							<table cellspacing="0" id="result_table" style="height:50px;">
+							</table>
+							<div id="page_number">
+							</div>
+						</div>
+					</div>
+				</div>
+			</td>
+			<td id="rights"  valign="top" >
+				<div id="right-col" style="vertical-align:top;margin-top:-2px;" >
+
+					<div id="mapWrapper" style="margin-left: 300px;";>
+						<div id="layerControl">    </div><div id="LayerSwither">     </div>
+
+						<div id="legend" title="Legend"  style=" margin-bottom:0px;">
+							图例</div>
+						<div id="measurePol">
+						</div>
+						<div class="legend_box" style="position:absolute; margin-bottom:0px;">
+							<div class="legend_content">
+								<div class="guanbi">
+								</div>
+								<div id="lg">
+									<div class="wrap-r-div">
+										<ul>
+											<li style="width:">
+												<div style="background-color: rgb(249,243,193);" class="color">
+													&nbsp;
+												</div>
+
+												<div class="text">
+													耕地</div>
+											</li>
+											<li>
+												<div style="background-color: rgb(20,119,73);" class="color">
+													&nbsp;
+												</div>
+												<div class="text">
+													森林</div>
+											</li>
+											<li>
+												<div style="background-color: rgb(169,208,95);" class="color">
+													&nbsp;
+												</div>
+												<div class="text">
+													草地</div>
+											</li>
+											<li>
+												<div style="background-color: rgb(62,179,112);" class="color">
+													&nbsp;
+												</div>
+												<div class="text">
+													灌木地</div>
+											</li>
+											<li>
+												<div style="background-color: rgb(126,206,244);" class="color">
+													&nbsp;
+												</div>
+												<div class="text">
+													湿地</div>
+											</li>
+											<li>
+												<div style="background-color: rgb(0,68,154);" class="color">
+													&nbsp;
+												</div>
+												<div class="text">
+													水体</div>
+											</li>
+											<li>
+												<div style="background-color: rgb(100,100,50);" class="color">
+													&nbsp;
+												</div>
+												<div class="text">
+													苔原</div>
+											</li>
+											<li>
+												<div style="background-color: rgb(147,47,20);" class="color">
+													&nbsp;
+												</div>
+												<div class="text">
+													人造地表</div>
+											</li>
+											<li>
+												<div style="background-color: rgb(202,202,202);" class="color">
+													&nbsp;
+												</div>
+												<div class="text">
+													裸地</div>
+											</li>
+											<li>
+												<div style="background-color: rgb(211,237,251);" class="color">
+													&nbsp;
+												</div>
+												<div class="text">
+													冰川和永久积雪</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="RmapWrapper">
+						<div id="RlayerControl">    </div><div id="RLayerSwither">     </div>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+
+</form>
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="./coverData.js"></script>
+</body>
+</html>

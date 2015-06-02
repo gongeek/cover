@@ -4,8 +4,51 @@ html, body, .container-fluid {
 }
 
 .header {
+    position: relative;
     height: 10%;
-    background: #cfc;
+    background: #4A4AB8;
+
+}
+
+.header h1 {
+    position: absolute;
+    padding: 2px 0 0 5px;
+    margin: 0;
+    line-height: 50px;
+}
+
+
+.header a {
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+}
+.header .user-info{
+    position: absolute;
+    height: 100%;
+    padding-top: 18px;
+    font-size: 18px;
+    right: 30px;
+}
+
+
+.header .user-info a{
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: normal;
+}
+.header .user-info a span{
+    padding-right: 5px;
+}
+.header .user-info a:hover{
+    text-decoration: underline;
+}
+.header a:active {
+    text-decoration: none;
+}
+
+.header a:hover {
+    text-decoration: none;
 }
 
 .main {
@@ -43,6 +86,7 @@ html, body, .container-fluid {
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    opacity: 0.8;
 }
 
 .map-btn:hover {
@@ -60,7 +104,7 @@ html, body, .container-fluid {
 
 #J_SwitchBtn {
     position: absolute;
-    top: 3%;
+    top: 10px;
     right: 2%;
 }
 
@@ -94,8 +138,8 @@ html, body, .container-fluid {
 
 #J_show_tuli {
     position: absolute;
-    bottom: 2%;
-    left: 2%;
+    bottom: 10px;
+    left: 10px;
 }
 
 #J_show_tuli:hover {
@@ -107,8 +151,8 @@ html, body, .container-fluid {
     height: 165px;
     display: none;
     padding: 5px;
-    bottom: 2%;
-    left: 6%;
+    bottom: 10px;
+    left: 40px;
     cursor: pointer;
     overflow: hidden;
 }
@@ -172,13 +216,15 @@ html, body, .container-fluid {
 }
 
 #map_zoom_slider {
+    left: 10px;
     top: 40%;
+    opacity: 0.8;
 }
 
 #J_measure_btn {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 10px;
+    left: 10px;
 
 }
 
@@ -186,8 +232,8 @@ html, body, .container-fluid {
     display: none;
     width: 220px;
     padding: 10px;
-    top: 70px;
-    left: 20px;
+    top: 50px;
+    left: 10px;
 }
 
 .claro .dijitTitlePaneTitle {
@@ -270,7 +316,7 @@ html, body, .container-fluid {
     top: 0;
     height: 62px;
     width: 100%;
-    background: blue;
+    background: #0000ff;
     z-index: 1;
 }
 
@@ -295,10 +341,49 @@ html, body, .container-fluid {
 .scroll-y-plane {
     margin-top: 15px;
     padding-right: 5px;
-    height: 95%;
+    height: 90%;
     overflow-y: scroll;
 }
 
+.scroll-y-plane::-webkit-scrollbar-track-piece {
+    background-color: #fff;
+}
+
 .scroll-y-plane::-webkit-scrollbar {
-    width: 0;
+    width: 8px;
+}
+
+.scroll-y-plane::-webkit-scrollbar-thumb {
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+#detail-content td {
+    text-align: center;
+    padding: 2px;
+    cursor: pointer;
+}
+
+#detail-content .active {
+    border: none;
+}
+
+#detail-content td:hover {
+    background: #f5f5f5;
+}
+
+#detail-content .scroll-y-plane {
+    height: 75%;
+}
+
+#current-btn {
+    position: absolute;
+    left: 70px;
+    top: 10px;
+}
+
+#camera-btn {
+    position: absolute;
+    left: 126px;
+    top: 10px;
 }

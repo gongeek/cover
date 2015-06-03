@@ -1,6 +1,7 @@
 var map;
 require([
 	"esri/map",
+    "esri/layers/GraphicsLayer",
 	"esri/tasks/query",
 	"esri/tasks/QueryTask",
 	"esri/layers/OpenStreetMapLayer",
@@ -23,6 +24,7 @@ require([
 	"esri/graphic",
 	"dojo/domReady!"
 ], function (Map,
+             GraphicsLayer,
              Query,
              QueryTask,
              OpenStreetMapLayer,
@@ -285,7 +287,6 @@ require([
 		//拿到要素数据
 		var chartData = evt.features[0].attributes;
 		var myPieChart = echarts.init(document.getElementById('pie-report'));
-		var myBarChart = echarts.init(document.getElementById('bar-report'));
 
 		var colorArr = ['#F9F3C1', '#147749', '#A9D05F',
 			'#3EB370', '#7ECEF4', '#00449A',
@@ -545,7 +546,7 @@ require([
 				}
 			]
 		};
-
+        $("#report-warn").hide();
 		myPieChart.setOption(pieOption);
 
 		console.log(chartData);
@@ -558,11 +559,36 @@ require([
 		$('#J_tab-content').find('.tab-content').removeClass('active').
 			eq($(event.currentTarget).data('index')).addClass('active');
 
+        //报表功能
 		if ($(event.currentTarget).data('index') == 2) {
 			map.addLayer(featureLayer);
 		} else {
 			map.removeLayer(featureLayer);
 		}
+
+        //上传功能
+        if($(event.currentTarget).data('index')==4){
+            $('#map_layers').css('cursor','crosshair');
+
+            map.on('click',function(event){
+                var mapPoint=event.mapPoint;
+                var inputDD=mapPoint.getLongitude()+','+mapPoint.getLatitude();
+                var ponit=new Point(mapPoint.getLongitude(),mapPoint.getLatitude(),new SpatialReference({wkid: 4326}));
+                var symbol = new PictureMarkerSymbol("img/pointer.png", 40, 40);
+                symbol.yoffset=20;
+                map.graphics.clear();
+                map.graphics.add(new Graphic(ponit, symbol));
+
+                $('#dd').val(inputDD);
+
+            });
+
+        }else{
+            $('#map_layers').css('cursor','default');
+
+            //取消click事件
+        }
+
 
 	});
 
@@ -741,9 +767,87 @@ require([
             yt:$('#yt').val(),
             ytms:$('#ytms').val()
         }).done(function(data){
-            debugger;
+            if(data==='申请成功'){
+                $('#download-form-btn').html('申请成功!').addClass('btn-success')
+                    .attr('disabled','disabled');
+            }else{
+                $('#download-form-btn').html('申请失败!').addClass('btn-danger')
+                    .attr('disabled','disabled');
+            }
         })
+    });
+
+
+    //上传图片
+    $('#upload-form-btn').on('click',function(event){
+        event.preventDefault();
+        var formData=new FormData($('#upload-form')[0]);
+        var oReq = new XMLHttpRequest();
+
+        oReq.open("POST", "/server/uploadImg.php",true);
+
+        oReq.onload = function(oEvent) {
+            if (oReq.status == 200) {
+                $('#img-div').html('<img height=110 src="'+oReq.responseText+'">');
+
+                $('#upload-form-btn').html('上传成功!继续上传').addClass('btn-success');
+
+            } else {
+                $('#upload-form-btn').html('上传失败!').addClass('btn-danger')
+                    .attr('disabled','disabled');
+            }
+        };
+        oReq.send(formData);
+    });
+
+
+
+    //新建GraphicsLayer
+    var gLayer=new GraphicsLayer({
+        infoTemplate:new InfoTemplate('图片详情','<p>图片:<img src="${imgUrl}"  width=100%></p><p>描述:${tpms}</p><p>所属:${tpUser}</p>')
+    });
+
+    $.post('/server/adminDeal.php',{getUpload:true}).done(function(data){
+
+        var dataArr=$.parseJSON(data),
+            i,
+            point,
+            symbol,
+            graphic,
+            ddArr=[];
+
+
+        for(i=0;i<dataArr.length;i++){
+            ddArr=dataArr[i]['dd'].split(',');
+            point=new Point(ddArr[0],ddArr[1],new SpatialReference({wkid: 4326}));
+            symbol = new PictureMarkerSymbol("/server/borderImg/"+dataArr[i]['tp'], 40, 40);
+            symbol.yoffset=20;
+            graphic=new Graphic(point, symbol,{imgUrl:("/server/uploadImg/"+dataArr[i]['tp']),tpms:dataArr[i]['tpms'],tpUser:dataArr[i]['username']});
+            gLayer.add(graphic);
+        }
+
+
+        map.addLayer(gLayer);
+
+
+
+
+        //添加为svg img边框为了好看
+        map.on('layer-add-result',function(event){
+            var layer=event.layer;
+            var $imgTgs=$('#graphicsLayer2_layer').find('image'),il= 0,rectStr;
+            for(il=0;il<$imgTgs.length;il++){
+                rectStr='<rect width="50" height="50" x="'+$imgTgs.eq(il).attr('x')
+                +'" y="'+$imgTgs.eq(il).attr('y')+'" style="stroke-width:10;stroke:rgb(255,255,255)"/>';
+                console.log(rectStr);
+
+                $('#graphicsLayer2_layer').append(rectStr);
+            }
+        })
+
+
     })
+
 
 
 

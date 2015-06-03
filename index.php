@@ -55,8 +55,11 @@ if(isset($_POST['out'])){
             if(isset($_SESSION['username'])){
                 echo '<a href="javascript:;"><span class="glyphicon glyphicon-user"></span><span>你好,'.$_SESSION['username'].'</span></a><a href="javascript:;" id="loginout-btn" ><span class="glyphicon glyphicon-log-out"></span>退出</a>';
             }else{
-                echo '<a href="javascript:;" class="login-btn" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-user"></span>登入</a><a href="javascript:;" class="register-btn" data-toggle="modal" data-target="#registerModal"><span class="glyphicon glyphicon-flash"></span>注册</a><a href="#"><span class="glyphicon glyphicon-question-sign"></span>帮助</a>';
+                echo '<a href="javascript:;" class="login-btn" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-user"></span>登入</a><a href="javascript:;" class="register-btn" data-toggle="modal" data-target="#registerModal"><span class="glyphicon glyphicon-flash"></span>注册</a>';
             }
+
+        echo '<a href="#"><span class="glyphicon glyphicon-question-sign"></span>帮助</a>';
+
         ?>
 
 
@@ -86,9 +89,15 @@ if(isset($_POST['out'])){
 				</li>
                 <li data-index="3">
 					<a href="javascript:;">
-						<span class="glyphicon glyphicon-arrow-down"></span><br/>
+						<span class="glyphicon glyphicon-download"></span><br/>
 						下载</a>
 				</li>
+                <li data-index="4">
+					<a href="javascript:;">
+						<span class="glyphicon glyphicon-upload"></span><br/>
+						上传</a>
+				</li>
+
 			</ul>
 		</div>
 		<div id="J_tab-content">
@@ -135,8 +144,10 @@ if(isset($_POST['out'])){
 				</div>
 			</div>
 			<div id="report-content" class="tab-content">
+                <h4 style="padding: 8px;border-radius:4px " id="report-warn" class="bg-warning">请先单击右图的行政区域</h4>
 				<div id="pie-report" style="height: 100%"></div>
 				<div id="bar-report" style="height: 100%"></div>
+
 			</div>
             <div id="download-content" class="tab-content">
                 <?php
@@ -152,7 +163,7 @@ EOT;
                 <form id='download-form'>
                     <div class="form-group">
                         <label for="zy">您的职业</label>
-                        <input class="form-control" type="text" name="zy" id="zy" placeholder="请输入您的职业"/>
+                        <input required="required" class="form-control" type="text" name="zy" id="zy" placeholder="请输入您的职业"/>
                     </div>
                     <div class="form-group">
                         <label for="yt">下载用途</label>
@@ -166,7 +177,7 @@ EOT;
                     </div>
                     <div class="form-group">
                         <label for="ytms">用途描述</label>
-                        <textarea name="ytms" id="ytms"  placeholder="请详细描述您的用途(100字以内)" class="form-control" rows="6"></textarea>
+                        <textarea required="required" name="ytms" id="ytms"  placeholder="请详细描述您的用途(100字以内)" class="form-control" rows="6"></textarea>
                     </div>
                     <button id="download-form-btn" class="btn btn-default btn-primary">提交下载申请</button>
                 </form>
@@ -180,6 +191,48 @@ EOT;
                 ?>
 
             </div>
+
+            <div id="upload-content" class="tab-content">
+
+                <?php
+
+                $upStr=<<<'EOT'
+<h4 style="padding: 8px;border-radius:4px " class="bg-primary">请完成上传表单</h4>
+                <blockquote style="font-size: 14px">
+                    <p>您可上传地表照片数据，待审核后，会将您上传的图片，分享并展示到地图上</p>
+                </blockquote>
+                <form action="/server/uploadImg.php" method="post" id="upload-form"
+                      enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="dd">拍摄地点(经纬度:lon,lat)</label>
+                        <input required="required" class="form-control" type="text" name="dd" id="dd" placeholder="请输入经纬度,也可以单击地图获取"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="tp">上传图片(建议尺寸500X500)</label>
+                        <input required="required" type="file" id="tp" name="tp">
+                        <div id="img-div" style="margin: 8px 0 0 0 "></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tpms">图片描述</label>
+                        <textarea required="required" name="tpms" id="tpms"  placeholder="请描述您上传的图片(50字以内)" class="form-control" rows="3"></textarea>
+                    </div>
+                    <button id="upload-form-btn" class="btn btn-default btn-primary">上传图片</button>
+                </form>
+EOT;
+                $infoStr=<<<'EOT'
+<h4 style="padding: 8px;border-radius:4px " class="bg-warning">检测到您没有登入，登入后方可上传!</h4>
+EOT;
+                if(isset($_SESSION['username'])){
+                    echo $upStr;
+                }else{
+                    echo $infoStr;
+                }
+                ?>
+
+
+
+            </div>
+
 		</div>
 	</div>
 	<div class="right">

@@ -16,7 +16,7 @@ if($_POST['repassword']!=$_POST['password']){
         $_POST['initusername']);
     $result  =  $mysqli -> query ( $sql );
     if(!$result->num_rows){
-        $sql2=sprintf("insert into usertable (username,email,password)VALUE (?,?,?)");
+        $sql2="insert into usertable (username,email,password)VALUE (?,?,?)";
         $stmt  =  $mysqli -> prepare ( $sql2 );
         $stmt -> bind_param ( "sss" ,  $_POST['initusername'],$_POST['initemail'],$_POST['password'] );
 

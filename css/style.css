@@ -387,3 +387,6 @@ html, body, .container-fluid {
     left: 126px;
     top: 10px;
 }
+#img-div img{
+    box-shadow: 0 0 5px #000;
+}

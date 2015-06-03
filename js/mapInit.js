@@ -570,7 +570,8 @@ require([
         if($(event.currentTarget).data('index')==4){
             $('#map_layers').css('cursor','crosshair');
 
-            map.on('click',function(event){
+
+            var fuckDojo=map.on('click',function(event){
                 var mapPoint=event.mapPoint;
                 var inputDD=mapPoint.getLongitude()+','+mapPoint.getLatitude();
                 var ponit=new Point(mapPoint.getLongitude(),mapPoint.getLatitude(),new SpatialReference({wkid: 4326}));
@@ -580,13 +581,13 @@ require([
                 map.graphics.add(new Graphic(ponit, symbol));
 
                 $('#dd').val(inputDD);
-
             });
 
         }else{
             $('#map_layers').css('cursor','default');
 
             //取消click事件
+            fuckDojo.remove();
         }
 
 
@@ -829,21 +830,6 @@ require([
 
         map.addLayer(gLayer);
 
-
-
-
-        //添加为svg img边框为了好看
-        map.on('layer-add-result',function(event){
-            var layer=event.layer;
-            var $imgTgs=$('#graphicsLayer2_layer').find('image'),il= 0,rectStr;
-            for(il=0;il<$imgTgs.length;il++){
-                rectStr='<rect width="50" height="50" x="'+$imgTgs.eq(il).attr('x')
-                +'" y="'+$imgTgs.eq(il).attr('y')+'" style="stroke-width:10;stroke:rgb(255,255,255)"/>';
-                console.log(rectStr);
-
-                $('#graphicsLayer2_layer').append(rectStr);
-            }
-        })
 
 
     })

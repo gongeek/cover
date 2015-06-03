@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f580f12b-bbad-43a1-a135-988db4401abd" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/downloadData.php" afterPath="$PROJECT_DIR$/server/downloadData.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/admin.php" afterPath="$PROJECT_DIR$/server/admin.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/adminDeal.php" afterPath="$PROJECT_DIR$/server/adminDeal.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/mapInit.js" afterPath="$PROJECT_DIR$/js/mapInit.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/register.php" afterPath="$PROJECT_DIR$/server/register.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="www.iws" />
@@ -56,58 +55,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="mapInit.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/js/mapInit.js">
+      <file leaf-file-name="admin.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/server/admin.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33274022" vertical-offset="17193" max-vertical-offset="18898">
-              <caret line="790" column="51" selection-start-line="790" selection-start-column="51" selection-end-line="790" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.05498282" vertical-offset="3180" max-vertical-offset="4290">
+              <caret line="146" column="36" selection-start-line="146" selection-start-column="36" selection-end-line="146" selection-end-column="36" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <marker date="1433348559498" expanded="true" signature="1602:1643" placeholder="select * fro..uploadimgtable..." />
+                <marker date="1433348559498" expanded="true" signature="1805:1847" placeholder="select * fro..downloadtable..." />
+                <marker date="1433348559498" expanded="true" signature="2403:2705" placeholder="..." />
+                <marker date="1433348559498" expanded="true" signature="3166:3433" placeholder="..." />
+                <marker date="1433348559498" expanded="true" signature="3166:3510" placeholder="..." />
+                <marker date="1433348559498" expanded="true" signature="3735:3780" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="adminDeal.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/server/adminDeal.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-19.483871" vertical-offset="958" max-vertical-offset="2508">
+              <caret line="71" column="17" selection-start-line="71" selection-start-column="17" selection-end-line="71" selection-end-column="17" />
+              <folding>
+                <marker date="1433349246384" expanded="true" signature="351:395" placeholder="update uploa..." />
+                <marker date="1433349246384" expanded="true" signature="530:571" placeholder="select * fro..uploadimgtable..." />
+                <marker date="1433349246384" expanded="true" signature="856:901" placeholder="update downl..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="对照表.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/extra/对照表.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="uploadImg.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/uploadImg.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.096774" vertical-offset="2520" max-vertical-offset="3454">
-              <caret line="133" column="55" selection-start-line="133" selection-start-column="55" selection-end-line="133" selection-end-column="55" />
-              <folding>
-                <element signature="e#6#87#0#PHP" expanded="true" />
-                <marker date="1433343606044" expanded="true" signature="569:633" placeholder="insert into ..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_ags_757147.jpg" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/borderImg/_ags_757147.jpg">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_ags_1011998848.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/smallImg/_ags_1011998848.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_ags_1011998848.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server/borderImg/_ags_1011998848.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.3035715" vertical-offset="4479" max-vertical-offset="9614">
-              <caret line="212" column="41" selection-start-line="212" selection-start-column="41" selection-end-line="212" selection-end-column="41" />
-              <folding>
-                <marker date="1433311744554" expanded="true" signature="1122:1183" placeholder="select * fro..usertable..." />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -140,11 +125,11 @@
         <option value="$PROJECT_DIR$/server/register.php" />
         <option value="$PROJECT_DIR$/server/downloadData.php" />
         <option value="$PROJECT_DIR$/css/style.css" />
+        <option value="$PROJECT_DIR$/server/uploadImg.php" />
+        <option value="$PROJECT_DIR$/js/mapInit.js" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/server/admin.php" />
         <option value="$PROJECT_DIR$/server/adminDeal.php" />
-        <option value="$PROJECT_DIR$/server/uploadImg.php" />
-        <option value="$PROJECT_DIR$/js/mapInit.js" />
       </list>
     </option>
   </component>
@@ -354,43 +339,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="uploadImg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="smallImg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="borderImg" />
+              <option name="myItemId" value="PHPMailer" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -405,38 +354,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="echarts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="www" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="img" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -464,7 +381,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
+              <option name="myItemId" value="arcgis_js_api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="library" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="3.9" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -490,11 +415,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\php\wamp\www\server" />
+      <recent name="D:\php\wamp\www\extra" />
       <recent name="D:\php\wamp\www\img" />
       <recent name="D:\php\wamp\www\arcgis_js_api\library\3.9\3.9\js" />
       <recent name="D:\php\wamp\www\arcgis_js_api\library\3.9\3.9\js\dojo\echarts" />
-      <recent name="D:\php\wamp\www\arcgis_js_api\library\3.9\3.9\js\dojo" />
-      <recent name="D:\php\wamp\www\js\echarts" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\php\wamp\www\js" />
@@ -616,26 +541,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/mapInit.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="36" column="2" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
@@ -837,35 +747,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server/adminDeal.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.83871" vertical-offset="175" max-vertical-offset="836">
-          <caret line="19" column="26" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="26" />
-          <folding>
-            <marker date="1433330436288" expanded="true" signature="-1:-1" placeholder="update uploa..." />
-            <marker date="1433330436288" expanded="true" signature="-1:-1" placeholder="select * fro..uploadimgtable..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/admin.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.0" vertical-offset="1266" max-vertical-offset="2970">
-          <caret line="66" column="1" selection-start-line="61" selection-start-column="0" selection-end-line="66" selection-end-column="1" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <marker date="1433329263904" expanded="true" signature="-1:-1" placeholder="select * fro..uploadimgtable..." />
-            <marker date="1433329263904" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1433329263904" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1433329263904" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1433329263904" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1433329263904" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1433329263904" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1433329263904" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/uploadImg/_ags_184225782.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -948,30 +829,74 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server/uploadImg.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.096774" vertical-offset="2520" max-vertical-offset="3454">
+        <state vertical-scroll-proportion="0.6975945" vertical-offset="2520" max-vertical-offset="3454">
           <caret line="133" column="55" selection-start-line="133" selection-start-column="55" selection-end-line="133" selection-end-column="55" />
           <folding>
             <element signature="e#6#87#0#PHP" expanded="true" />
-            <marker date="1433343606044" expanded="true" signature="569:633" placeholder="insert into ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.3035715" vertical-offset="4479" max-vertical-offset="9614">
-          <caret line="212" column="41" selection-start-line="212" selection-start-column="41" selection-end-line="212" selection-end-column="41" />
-          <folding>
-            <marker date="1433311744554" expanded="true" signature="1122:1183" placeholder="select * fro..usertable..." />
+            <marker date="1433343606044" expanded="true" signature="-1:-1" placeholder="insert into ..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/mapInit.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33274022" vertical-offset="17193" max-vertical-offset="18898">
-          <caret line="790" column="51" selection-start-line="790" selection-start-column="51" selection-end-line="790" selection-end-column="51" />
+        <state vertical-scroll-proportion="-14.0" vertical-offset="12498" max-vertical-offset="18590">
+          <caret line="584" column="0" selection-start-line="584" selection-start-column="0" selection-end-line="584" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.11340206" vertical-offset="1386" max-vertical-offset="9614">
+          <caret line="60" column="33" selection-start-line="60" selection-start-column="33" selection-end-line="60" selection-end-column="33" />
+          <folding>
+            <marker date="1433345652891" expanded="true" signature="-1:-1" placeholder="select * fro..usertable..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/extra/对照表.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="626">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/PHPMailer/docs/faq.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/adminDeal.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.483871" vertical-offset="958" max-vertical-offset="2508">
+          <caret line="71" column="17" selection-start-line="71" selection-start-column="17" selection-end-line="71" selection-end-column="17" />
+          <folding>
+            <marker date="1433349246384" expanded="true" signature="351:395" placeholder="update uploa..." />
+            <marker date="1433349246384" expanded="true" signature="530:571" placeholder="select * fro..uploadimgtable..." />
+            <marker date="1433349246384" expanded="true" signature="856:901" placeholder="update downl..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/admin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.05498282" vertical-offset="3180" max-vertical-offset="4290">
+          <caret line="146" column="36" selection-start-line="146" selection-start-column="36" selection-end-line="146" selection-end-column="36" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1433348559498" expanded="true" signature="1602:1643" placeholder="select * fro..uploadimgtable..." />
+            <marker date="1433348559498" expanded="true" signature="1805:1847" placeholder="select * fro..downloadtable..." />
+            <marker date="1433348559498" expanded="true" signature="2403:2705" placeholder="..." />
+            <marker date="1433348559498" expanded="true" signature="3166:3433" placeholder="..." />
+            <marker date="1433348559498" expanded="true" signature="3166:3510" placeholder="..." />
+            <marker date="1433348559498" expanded="true" signature="3735:3780" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -68,6 +68,15 @@ while($row = $result -> fetch_array ( MYSQLI_ASSOC )){
 
 
 
+$sql2="select * from downloadtable WHERE isDown=0";
+$result2=$mysqli->query($sql2);
+
+$result2Arr=array();
+
+while($row2=$result2->fetch_array(MYSQLI_ASSOC)){
+    array_push($result2Arr,$row2);
+}
+
 
 $result -> free ();
 $mysqli->close();
@@ -77,7 +86,7 @@ $mysqli->close();
 <div style="width: 80%;margin: 20px auto">
 
 <h3>待审核的上传图片</h3>
-<table class="table table-bordered table-hover" >
+<table id="imgTable" class="table table-bordered table-hover" >
     <thead>
     <tr>
         <th>ID</th>
@@ -108,6 +117,44 @@ for($i=0;$i<count($resultArr);$i++){
 
     </tbody>
 </table>
+
+    <h3>待审核的下载申请</h3>
+    <table id="dTable" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>用户名</th>
+            <th>用户邮箱</th>
+            <th>用户职业</th>
+            <th>下载用途</th>
+            <th>用途描述</th>
+            <th>审核状态</th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        <?php
+
+        for($j=0;$j<count($result2Arr);$j++){
+            echo "<tr>
+<td>{$result2Arr[$j]['id']}</td>
+<td>{$result2Arr[$j]['username']}</td>
+<td>{$result2Arr[$j]['email']}</td>
+<td>{$result2Arr[$j]['zy']}</td>
+<td>{$result2Arr[$j]['yt']}</td>
+<td>{$result2Arr[$j]['ytms']}</td>
+<td><button data-id='{$result2Arr[$j]['id']}' data-email='{$result2Arr[$j]['email']}' class='btn btn-primary'>还未审核</button></td>
+</tr>";
+
+        }
+
+        ?>
+
+
+
+        </tbody>
+    </table>
 </div>
 
 
@@ -115,7 +162,7 @@ for($i=0;$i<count($resultArr);$i++){
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('button').click(function(event){
+        $('#imgTable').find('button').click(function(event){
             var $cur=$(this);
             $.post('/server/adminDeal.php',{isOkId:$(this).data('id')}).
                 done(function(data){
@@ -123,7 +170,20 @@ for($i=0;$i<count($resultArr);$i++){
                     $cur.addClass('btn-success').
                         attr('disabled','disabled')
                 });
+        });
+
+        $('#dTable').find('button').on('click',function(event){
+            var $cur=$(this);
+            $.post('/server/adminDeal.php',{isDownId:$(this).data('id'),email:$(this).data('email')}).
+                done(function(data){
+                    $cur.html('审核通过');
+                    $cur.addClass('btn-success').
+                        attr('disabled','disabled')
+                });
+
+
         })
+
     })
 </script>
 </body>

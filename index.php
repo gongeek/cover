@@ -19,11 +19,11 @@ if(isset($_POST['out'])){
 	<title></title>
 	<link rel="stylesheet"
 	      href="./bower_components/bootstrap/dist/css/bootstrap.min.css"/>
-	<!--<link rel="stylesheet"-->
-	<!--href="http://js.arcgis.com/3.13/dijit/themes/claro/claro.css">-->
-	<!--<link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">-->
-	<link rel="stylesheet" href="./css/claro.css"/>
-	<link rel="stylesheet" href="./css/esri.css"/>
+	<link rel="stylesheet"
+	href="http://js.arcgis.com/3.13/dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
+<!--	<link rel="stylesheet" href="./css/claro.css"/>-->
+<!--	<link rel="stylesheet" href="./css/esri.css"/>-->
 	<link rel="stylesheet" href="./css/style.css"/>
 </head>
 <body class="container-fluid">
